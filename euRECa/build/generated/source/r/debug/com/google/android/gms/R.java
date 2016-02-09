@@ -94,6 +94,7 @@ public final class R {
 		public static final int none = 0x7f0c0010;
 		public static final int normal = 0x7f0c000c;
 		public static final int standard = 0x7f0c003a;
+		public static final int test = 0x7f0c008a;
 		public static final int wide = 0x7f0c003b;
 		public static final int wrap_content = 0x7f0c0041;
 	}

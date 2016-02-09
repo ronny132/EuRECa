@@ -171,6 +171,11 @@ public class Recording extends Observable implements Callable, Serializable{
 		return other.getName().equals(name);
 	}
 
+    @Override
+    public int hashCode() {
+        return name.hashCode();
+    }
+
     @DynamoDBIgnore
     public Category getCategory() {
         return category;

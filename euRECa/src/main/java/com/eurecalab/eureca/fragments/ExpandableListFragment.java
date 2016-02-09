@@ -7,11 +7,14 @@ import com.eurecalab.eureca.R;
 import com.eurecalab.eureca.common.ActionCommon;
 import com.eurecalab.eureca.common.ColorCommon;
 import com.eurecalab.eureca.common.SearchCommon;
+import com.eurecalab.eureca.constants.DynamoDBAction;
+import com.eurecalab.eureca.constants.GenericConstants;
 import com.eurecalab.eureca.core.Callable;
 import com.eurecalab.eureca.core.Category;
 import com.eurecalab.eureca.core.GlobalState;
 import com.eurecalab.eureca.core.Recording;
 import com.eurecalab.eureca.net.CategoriesAsyncTask;
+import com.eurecalab.eureca.net.DynamoDBFavoritesTask;
 import com.eurecalab.eureca.ui.CategoryAdapter;
 
 import android.os.Bundle;
@@ -26,6 +29,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -34,6 +38,7 @@ public class ExpandableListFragment extends Fragment implements OnClickListener,
     private CategoryAdapter adapter;
     private SearchView searchView;
     private FloatingActionButton recordButton;
+    private RecyclerView recyclerView;
 
     private GlobalState gs;
 
@@ -47,17 +52,19 @@ public class ExpandableListFragment extends Fragment implements OnClickListener,
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
-        RecyclerView list = (RecyclerView) rootView.findViewById(R.id.categoryListView);
-        list.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView = (RecyclerView) rootView.findViewById(R.id.categoryListView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         gs = (GlobalState) getActivity().getApplication();
 
         adapter = new CategoryAdapter(getActivity(), R.layout.category_layout_expanded, gs.getFilteredCategories());
-        list.setAdapter(adapter);
+        recyclerView.setAdapter(adapter);
 
         if (gs.getCategories() == null || gs.getCategories().isEmpty()) {
             CategoriesAsyncTask task = new CategoriesAsyncTask(getActivity(), this);
             task.execute();
+            DynamoDBFavoritesTask favoritesTask = new DynamoDBFavoritesTask(getActivity(), gs.getAuthenticatedUser(), null,
+                    GenericConstants.DEFAULT_SEARCH_LIMIT, this, DynamoDBAction.GET_USER_FAVORITES);
         }
 
         recordButton = (FloatingActionButton) rootView.findViewById(R.id.fab);
@@ -91,6 +98,7 @@ public class ExpandableListFragment extends Fragment implements OnClickListener,
         if (v.equals(searchView)) {
             searchView.setOnQueryTextListener(this);
         }
+
     }
 
     @Override

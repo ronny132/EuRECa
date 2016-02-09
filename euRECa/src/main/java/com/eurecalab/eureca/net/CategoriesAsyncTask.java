@@ -31,11 +31,7 @@ public class CategoriesAsyncTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected void onPreExecute() {
         Collection<Category> storedCategories = gs.getCategories();
-        if (storedCategories == null || storedCategories.isEmpty()) {
-            reload = true;
-        } else {
-            reload = false;
-        }
+        reload = storedCategories == null || storedCategories.isEmpty();
         dialog = new ProgressDialog(context);
         dialog.setMessage(context.getString(R.string.updating));
         if (!context.isFinishing()) {
@@ -48,7 +44,7 @@ public class CategoriesAsyncTask extends AsyncTask<Void, Void, Void> {
         if (reload) {
             DBManager manager = new DBManager(context);
             manager.connect();
-            manager.downloadCategories(gs.getCategories(), gs.getFilteredCategories());
+            manager.downloadCategories(gs.getCategories(), gs.getFilteredCategories(), gs.getAuthenticatedUser());
         }
         return null;
     }

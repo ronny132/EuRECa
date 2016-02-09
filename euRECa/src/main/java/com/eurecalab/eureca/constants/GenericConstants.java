@@ -1,6 +1,7 @@
 package com.eurecalab.eureca.constants;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by MeringoloRo on 25/01/2016.
@@ -22,4 +23,9 @@ public interface GenericConstants {
     int DIALETTI_SORT_INDEX = 8;
     int FAVORITES_SORT_INDEX = 9;
     String SELECTED_RECORDING = "selected recording";
+    Date DEFAULT_SEARCH_LOWER_BOUND = null;
+    int DEFAULT_SEARCH_LIMIT = 10;
+
+    String YOUTUBE_CATEGORY = "Youtube";
+    String FAVORITES_CATEGORY = "Preferiti";
 }

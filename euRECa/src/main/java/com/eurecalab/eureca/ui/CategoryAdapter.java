@@ -97,7 +97,7 @@ public class CategoryAdapter extends
     }
 
     @Override
-    public void onBindViewHolder(final ViewGroupHolder holder, int position) {
+    public void onBindViewHolder(final ViewGroupHolder holder, final int position) {
         final Category category = getItem(position);
         holder.name.setText(category.getName());
 
@@ -117,7 +117,9 @@ public class CategoryAdapter extends
 
         if(category.isRecordingListVisible()){
             holder.soundListView.setVisibility(View.VISIBLE);
-            holder.soundListView.setLayoutManager(new MyLinearLayoutManager(context, MyLinearLayoutManager.VERTICAL, false));
+            LinearLayoutManager lm = new MyLinearLayoutManager(context, MyLinearLayoutManager.VERTICAL, false);
+            holder.soundListView.setLayoutManager(lm);
+            holder.soundListView.smoothScrollToPosition(category.getRecordings().size() - 1);
         }
         else{
             holder.soundListView.setVisibility(View.GONE);
@@ -134,7 +136,8 @@ public class CategoryAdapter extends
                 else{
                     category.setRecordingListVisible(true);
                     holder.soundListView.setVisibility(View.VISIBLE);
-                    holder.soundListView.setLayoutManager(new MyLinearLayoutManager(context, MyLinearLayoutManager.VERTICAL, false));
+                    LinearLayoutManager lm = new MyLinearLayoutManager(context, MyLinearLayoutManager.VERTICAL, false);
+                    holder.soundListView.setLayoutManager(lm);
                 }
             }
         });

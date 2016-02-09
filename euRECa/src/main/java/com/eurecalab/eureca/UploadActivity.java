@@ -66,13 +66,10 @@ public class UploadActivity extends AppCompatActivity implements GoogleApiClient
     public void onStart() {
         super.onStart();
 
-        Log.v("TAG", "Chiamato On Start");
-
         silentSignIn();
     }
 
     public void silentSignIn() {
-        Log.v("TAG", "Chiamato Silent Sign In");
         OptionalPendingResult<GoogleSignInResult> opr = Auth.GoogleSignInApi.silentSignIn(mGoogleApiClient);
         if (opr.isDone()) {
             // If the user's cached credentials are valid, the OptionalPendingResult will be "done"
@@ -80,13 +77,10 @@ public class UploadActivity extends AppCompatActivity implements GoogleApiClient
             GoogleSignInResult result = opr.get();
             handleSignInResult(result);
 
-            Log.v("TAG", "Cached credentials");
         } else {
             // If the user has not previously signed in on this device or the sign-in has expired,
             // this asynchronous branch will attempt to sign in the user silently.  Cross-device
             // single sign-on will occur in this branch.
-
-            Log.v("TAG", "Not cached");
 
             opr.setResultCallback(new ResultCallback<GoogleSignInResult>() {
                 @Override
@@ -102,7 +96,6 @@ public class UploadActivity extends AppCompatActivity implements GoogleApiClient
     private void handleSignInResult(GoogleSignInResult result) {
         if (result.isSuccess()) {
 
-            Log.v("TAG", "Sign in success");
             // Signed in successfully, show authenticated UI.
             GoogleSignInAccount acct = result.getSignInAccount();
             SignInTask task = new SignInTask(this, acct.getEmail(), acct.getDisplayName(), this);
@@ -121,7 +114,6 @@ public class UploadActivity extends AppCompatActivity implements GoogleApiClient
 
     @Override
     public void callback(Object... args) {
-        Log.v("TAG", "Callback");
         checkProUser();
     }
 
@@ -132,20 +124,15 @@ public class UploadActivity extends AppCompatActivity implements GoogleApiClient
     }
 
     private void checkProUser() {
-        Log.v("TAG", "CheckProUser");
         authenticatedUser = gs.getAuthenticatedUser();
         if (authenticatedUser != null) {
-            Log.v("TAG", "User != null");
             if (authenticatedUser.isProUser()) {
-                Log.v("TAG", "Pro User");
 
                 if (savedInstanceState == null) {
                     getSupportFragmentManager().beginTransaction().add(R.id.container, new UploadFragment()).commit();
 
                 }
             } else {
-
-                Log.v("TAG", "Free User");
 
                 Toast.makeText(this, getString(R.string.functionality_available_in_pro), Toast.LENGTH_LONG).show();
                 Intent appIntent = new Intent(this, MainActivity.class);

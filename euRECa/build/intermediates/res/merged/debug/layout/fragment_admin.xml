@@ -38,11 +38,21 @@
         android:layout_marginTop="20dp"
         android:text="Bonifica" />
 
+    <Button
+        android:id="@+id/test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/bonifica"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/white"
+        android:layout_marginTop="20dp"
+        android:text="Test" />
+
     <com.google.android.gms.common.SignInButton
         android:id="@+id/sign_in_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/bonifica"
+        android:layout_below="@+id/test"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp" />
 
@@ -50,7 +60,7 @@
         android:id="@+id/sign_out_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/bonifica"
+        android:layout_below="@+id/test"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:text="@string/sign_out"
@@ -61,7 +71,7 @@
         android:id="@+id/status_text_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/bonifica"
+        android:layout_below="@id/test"
         android:layout_marginTop="80dp"
         android:text="Test"
         android:gravity="center_horizontal"/>

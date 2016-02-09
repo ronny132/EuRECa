@@ -1,8 +1,16 @@
 package com.eurecalab.eureca.aws;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 import android.content.Context;
 
@@ -16,13 +24,12 @@ import com.amazonaws.regions.Region;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBAsyncClient;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
-import com.amazonaws.services.dynamodbv2.model.ComparisonOperator;
-import com.amazonaws.services.dynamodbv2.model.Condition;
 import com.eurecalab.eureca.R;
 import com.eurecalab.eureca.constants.GenericConstants;
 import com.eurecalab.eureca.core.Category;
 import com.eurecalab.eureca.core.Recording;
 import com.eurecalab.eureca.core.Share;
+import com.eurecalab.eureca.core.ShareClassification;
 import com.eurecalab.eureca.core.User;
 
 public class DBManager {
@@ -54,7 +61,7 @@ public class DBManager {
         mapper.save(category);
     }
 
-    public void storeRecordingAndCategory(Recording recording, Category category){
+    public void storeRecordingAndCategory(Recording recording, Category category) {
         mapper.save(recording);
         mapper.save(category);
     }
@@ -63,32 +70,59 @@ public class DBManager {
         mapper.save(share);
     }
 
-    public List<Recording> getUserFavorites(String username){
+    public List<Recording> getUserFavorites(String username, Date lowerBound, int limit) {
+        List<ShareClassification> shareClassifications = new LinkedList<>();
+        Map<Recording, Integer> shares = new HashMap<>();
+
+        Map<String, AttributeValue> eav = new HashMap<String, AttributeValue>();
+        eav.put(":user", new AttributeValue().withS(username));
+
+        if(lowerBound != null){
+            eav.put(":date", new AttributeValue().withS(GenericConstants.DATE_FORMATTER.format(lowerBound)));
+        }
+
+        String filterExpression = "Username = :user";
+        if(lowerBound != null){
+            filterExpression += " and ShareDate > :date";
+        }
+
+        DynamoDBScanExpression scanExpression = new DynamoDBScanExpression()
+                .withFilterExpression(filterExpression)
+                .withExpressionAttributeValues(eav);
+
+        PaginatedScanList<Share> res = mapper.scan(Share.class, scanExpression);
+
+        for (Share sh : res) {
+            Recording rec = sh.getRecording();
+            int currentCount;
+            if (shares.containsKey(rec)) {
+                currentCount = shares.get(rec);
+            } else {
+                currentCount = 0;
+            }
+            shares.put(sh.getRecording(), currentCount + 1);
+        }
+
+        for (Recording rec : shares.keySet()) {
+            int shareCount = shares.get(rec);
+            ShareClassification sc = new ShareClassification();
+            sc.setRecording(rec);
+            sc.setShareCount(shareCount);
+            shareClassifications.add(sc);
+        }
+
+        Collections.sort(shareClassifications);
+        shareClassifications = shareClassifications.subList(0, limit);
+
         List<Recording> result = new LinkedList<>();
-
-//        Share share = new Share();
-//        share.setUsername(username);
-
-        Condition rangeKeyCondition = new Condition()
-                .withComparisonOperator(ComparisonOperator.EQ.toString())
-                .withAttributeValueList(new AttributeValue().withS(username.toString()));
-
-        DynamoDBQueryExpression queryExpression = new DynamoDBQueryExpression()
-//                .withHashKeyValues(share)
-                .withRangeKeyCondition("Username", rangeKeyCondition)
-                .withConsistentRead(false);
-
-        PaginatedQueryList<Share> res = mapper.query(Share.class, queryExpression);
-        res.size();
-
-        for (Share share : res) {
-            result.add(share.getRecording());
+        for (ShareClassification sc : shareClassifications) {
+            result.add(sc.getRecording());
         }
 
         return result;
     }
 
-    public void downloadCategories(Collection<Category> categories, Collection<Category> categoriesFiltered) {
+    public void downloadCategories(Collection<Category> categories, Collection<Category> categoriesFiltered, User user) {
         DynamoDBScanExpression scanExpression = new DynamoDBScanExpression();
         PaginatedScanList<Category> result = mapper.scan(Category.class, scanExpression);
         categories.clear();
@@ -99,9 +133,16 @@ public class DBManager {
                 recording.setContext(context);
                 recording.setCategory(category);
             }
+
+            if(category.getName().equals(GenericConstants.FAVORITES_CATEGORY)){
+                List<Recording> favorites = getUserFavorites(user.getEmail(), null, GenericConstants.DEFAULT_SEARCH_LIMIT);
+                category.setRecordings(favorites);
+            }
+
             categories.add(category);
             categoriesFiltered.add(category);
         }
+
     }
 
     public void downloadCategories(Collection<Category> categories) {
@@ -123,7 +164,7 @@ public class DBManager {
         toFind.setEmail(email);
 
         User user = findUser(toFind);
-        if(user == null){
+        if (user == null) {
             toFind.setProVersionExpireDate(GenericConstants.DATE_INFINITE);
             storeUser(toFind);
             return toFind;
@@ -136,7 +177,7 @@ public class DBManager {
         mapper.save(user);
     }
 
-    private User findUser(User user){
+    private User findUser(User user) {
         DynamoDBQueryExpression<User> queryExpression = new DynamoDBQueryExpression<>();
         queryExpression = queryExpression
                 .withHashKeyValues(user)
@@ -151,13 +192,13 @@ public class DBManager {
         }
     }
 
-    public void deleteRecording(Recording recording, Category category){
+    public void deleteRecording(Recording recording, Category category) {
         mapper.delete(recording);
         category.removeRecording(recording);
         mapper.save(category);
     }
 
-    public Recording findRecording(Recording recording){
+    public Recording findRecording(Recording recording) {
         DynamoDBQueryExpression<Recording> queryExpression = new DynamoDBQueryExpression<>();
         queryExpression = queryExpression
                 .withHashKeyValues(recording)

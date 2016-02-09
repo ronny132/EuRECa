@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.StringTokenizer;
 
@@ -14,7 +15,10 @@ import com.eurecalab.eureca.core.Callable;
 import com.eurecalab.eureca.core.Category;
 import com.eurecalab.eureca.core.GlobalState;
 import com.eurecalab.eureca.core.Recording;
+import com.eurecalab.eureca.core.Share;
+import com.eurecalab.eureca.core.ShareClassification;
 import com.eurecalab.eureca.net.CategoriesAsyncTaskAdmin;
+import com.eurecalab.eureca.net.DynamoDBFavoritesTask;
 import com.eurecalab.eureca.net.DynamoDBTask;
 import com.eurecalab.eureca.net.S3Task;
 import com.eurecalab.eureca.net.SignInTask;
@@ -196,7 +200,7 @@ public class AdminActivity extends AppCompatActivity implements Callable, OnClic
         persister.execute();
 
         cat = new Category();
-        cat.setName("Preferiti");
+        cat.setName(GenericConstants.FAVORITES_CATEGORY);
         cat.setColorHex("#FFFF00");
         cat.setIconFileName("favorites_logo.png");
         cat.setSortIndex(GenericConstants.FAVORITES_SORT_INDEX);
@@ -242,7 +246,7 @@ public class AdminActivity extends AppCompatActivity implements Callable, OnClic
                 cat.setColorHex("#B56D2F");
                 cat.setIconFileName("sound_logo.png");
                 cat.setSortIndex(GenericConstants.SOUND_EFFECTS_SORT_INDEX);
-            } else if (cat.getName().equals("Preferiti")) {
+            } else if (cat.getName().equals(GenericConstants.FAVORITES_CATEGORY)) {
                 cat.setColorHex("#FFFF00");
                 cat.setIconFileName("favorites_logo.png");
                 cat.setSortIndex(GenericConstants.FAVORITES_SORT_INDEX);
@@ -522,7 +526,19 @@ public class AdminActivity extends AppCompatActivity implements Callable, OnClic
     }
 
     private void getUserFavorites() {
-
+        DynamoDBFavoritesTask task = new DynamoDBFavoritesTask(this, gs.getAuthenticatedUser(),
+                GenericConstants.DEFAULT_SEARCH_LOWER_BOUND, GenericConstants.DEFAULT_SEARCH_LIMIT, new Callable() {
+            @Override
+            public void callback(Object... args) {
+                if(args != null && args.length == 1) {
+                    List<Recording> result = (List<Recording>) args[0];
+                    for (Recording rec : result) {
+                        Log.v("RECORDING", rec.getName());
+                    }
+                }
+            }
+        }, DynamoDBAction.GET_USER_FAVORITES);
+        task.execute();
     }
 
     private void deleteUnusedFiles() {
