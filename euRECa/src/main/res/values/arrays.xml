@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <array name="tabLabels">
+        <item>@string/home_tab</item>
+        <item>@string/settings_tab</item>
+        <item>@string/upload_tab</item>
+    </array>
+    
+    <array name="theme_colors">
+        <item>@color/color_primary_red</item>
+        <item>@color/color_primary_light_blue</item>
+        <item>@color/color_primary_blue</item>
+        <item>@color/color_primary_green</item>
+        <item>@color/color_primary_orange</item>
+        <item>@color/color_primary_yellow</item>
+        <item>@color/color_primary_violet</item>
+    </array>
+    
+    <array name="themes">
+        <item>@style/AppThemeRed</item>
+        <item>@style/AppThemeDefault</item>
+        <item>@style/AppThemeBlue</item>
+        <item>@style/AppThemeGreen</item>
+        <item>@style/AppThemeOrange</item>
+        <item>@style/AppThemeYellow</item>
+        <item>@style/AppThemeViolet</item>
+    </array>
+    
+    <array name="themes_reverse">
+        <item>@style/AppThemeRedReverse</item>
+        <item>@style/AppThemeReverse</item>
+        <item>@style/AppThemeBlueReverse</item>
+        <item>@style/AppThemeGreenReverse</item>
+        <item>@style/AppThemeOrangeReverse</item>
+        <item>@style/AppThemeYellowReverse</item>
+        <item>@style/AppThemeVioletReverse</item>
+    </array>
+</resources>

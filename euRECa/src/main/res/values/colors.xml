@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="color_primary_light_blue">#6994a8</color>
+    <color name="color_primary_green">#007A08</color>
+    <color name="color_primary_orange">#FF7800</color>
+    <color name="color_primary_blue">#006BB3</color>
+    <color name="color_primary_red">#EE111A</color>
+    <color name="color_primary_yellow">#FFC107</color>
+    <color name="color_primary_violet">#521E42</color>
+    <color name="color_primary_brown">#B56D2F</color>
+    
+    <color name="soundListBackground">#ffdddddd</color>
+	<color name="category1">#08306b</color>
+	<color name="category2">#6baed6</color>
+	
+	<color name="lightGrey">#9E9E9E</color>
+	<color name="white">#ffffff</color>
+	<color name="black">#333333</color>
+
+    <color name="transparent">#00000000</color>
+</resources>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+    <style name="AppThemeDefault" parent="Theme.AppCompat.Light">
+        <item name="android:windowTitleSize">50dip</item>
+        <item name="android:listViewStyle">@style/TransparentListView</item>
+        <item name="android:expandableListViewStyle">@style/TransparentExpandableListView</item>
+        <item name="colorAccent">@color/white</item>
+        <item name="colorPrimary">@color/color_primary_light_blue</item>
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="toolbarTheme">@style/ThemeOverlay.AppCompat.Dark</item>
+        <item name="colorButtonNormal">@color/color_primary_light_blue</item>
+    </style>
+    
+    <style name="AppThemeReverse" parent="AppThemeDefault">
+        <item name="colorAccent">@color/color_primary_light_blue</item>
+        <item name="colorPrimary">@color/white</item>
+        <item name="toolbarTheme">@style/ThemeOverlay.AppCompat.Light</item>
+    </style>
+    
+    <style name="AppThemeGreen" parent="AppThemeDefault">
+        <item name="colorPrimary">@color/color_primary_green</item>
+        <item name="colorButtonNormal">@color/color_primary_green</item>
+    </style>
+    
+    <style name="AppThemeGreenReverse" parent="AppThemeReverse">
+        <item name="colorAccent">@color/color_primary_green</item>
+        <item name="colorButtonNormal">@color/color_primary_green</item>
+    </style>
+    
+    <style name="AppThemeOrange" parent="AppThemeDefault">
+        <item name="colorPrimary">@color/color_primary_orange</item>
+        <item name="colorButtonNormal">@color/color_primary_orange</item>
+    </style>
+    
+    <style name="AppThemeOrangeReverse" parent="AppThemeReverse">
+        <item name="colorAccent">@color/color_primary_orange</item>
+        <item name="colorButtonNormal">@color/color_primary_orange</item>
+    </style>
+    
+    <style name="AppThemeBlue" parent="AppThemeDefault">
+        <item name="colorPrimary">@color/color_primary_blue</item>
+        <item name="colorButtonNormal">@color/color_primary_blue</item>
+    </style>
+    
+    <style name="AppThemeBlueReverse" parent="AppThemeReverse">
+        <item name="colorAccent">@color/color_primary_blue</item>
+        <item name="colorButtonNormal">@color/color_primary_blue</item>
+    </style>
+    
+    <style name="AppThemeRed" parent="AppThemeDefault">
+        <item name="colorPrimary">@color/color_primary_red</item>
+        <item name="colorButtonNormal">@color/color_primary_red</item>
+    </style>
+    
+    <style name="AppThemeRedReverse" parent="AppThemeReverse">
+        <item name="colorAccent">@color/color_primary_red</item>
+        <item name="colorButtonNormal">@color/color_primary_red</item>
+    </style>
+    
+    <style name="AppThemeYellow" parent="AppThemeDefault">
+        <item name="colorPrimary">@color/color_primary_yellow</item>
+        <item name="colorButtonNormal">@color/color_primary_yellow</item>
+    </style>
+    
+    <style name="AppThemeYellowReverse" parent="AppThemeReverse">
+        <item name="colorAccent">@color/color_primary_yellow</item>
+        <item name="colorButtonNormal">@color/color_primary_yellow</item>
+    </style>
+    
+    <style name="AppThemeViolet" parent="AppThemeDefault">
+        <item name="colorPrimary">@color/color_primary_violet</item>
+        <item name="colorButtonNormal">@color/color_primary_violet</item>
+    </style>
+    
+    <style name="AppThemeVioletReverse" parent="AppThemeReverse">
+        <item name="colorAccent">@color/color_primary_violet</item>
+        <item name="colorButtonNormal">@color/color_primary_violet</item>
+    </style>
+
+</resources>

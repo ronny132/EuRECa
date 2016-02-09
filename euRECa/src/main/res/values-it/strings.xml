@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">EuRECa</string>
+    <string name="admin_name">EuRECa Admin</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Impostazioni</string>
+    <string name="action_search">Cerca</string>
+    <string name="share">Condividi</string>
+	<string name="settings_tab">OPZIONI</string>
+	<string name="home_tab">HOME</string>
+	<string name="upload_tab">UPLOAD</string>
+	<string name="reverseColor">Inverti Colori</string>
+	<string name="apply">Applica</string>
+	<string name="app_restart">(L\'app si riavvierà)</string>
+	<string name="saved_color">Saved Color</string>
+	<string name="saved_reverse">Saved Reverse</string>
+	<string name="color">Colore</string>
+	<string name="download_error">Errore!</string>
+	<string name="name">Nome: </string>
+	<string name="category">Categoria: </string>
+	<string name="tags">Tag: </string>
+	<string name="file">File: </string>
+	<string name="choose">Scegli</string>
+	<string name="save">Salva</string>
+	<string name="tags_hint">separati da spazio</string>
+	<string name="downloading">In Download…</string>
+	<string name="updating">Aggiornamento…</string>
+	<string name="signing">Accesso in corso</string>
+	<string name="signed_out">Disconnesso</string>
+	<string name="check_name">Esiste già una registrazione con questo nome</string>
+	<string name="check_file">Il file selezionato è troppo grande</string>
+	<string name="upload_ok">Upload avvenuto con successo</string>
+	<string name="select_folder">Seleziona Cartella</string>
+	<string name="current_folder">Cartella Corrente</string>
+	<string name="sign_out">Disconnetti</string>
+	<string name="theme">Tema</string>
+	<string name="app_license">Licenza: </string>
+	<string name="expires_in">(scade fra</string>
+	<string name="days">giorni)</string>
+	<string name="day">giorno)</string>
+	<string name="functionality_available_in_pro">Questa funzionalità è disponibile solo con la licenza Premium</string>
+	<string name="extend">Estendi</string>
+	<string name="action_edit">Modifica</string>
+	<string name="action_delete">Elimina</string>
+	<string name="are_you_sure">Vuoi davvero eliminare la registrazione?</string>
+	<string name="yes">Sì</string>
+	<string name="uploading">In Upload…</string>
+	<string name="deleting">Rimozione…</string>
+	<string name="select_a_file">Seleziona un file</string>
+	<string name="parent_directory">…Cartella Superiore</string>
+	<string name="cancel">Annulla</string>
+	<string name="empty_name">Il nome è obbligatorio</string>
+</resources>
