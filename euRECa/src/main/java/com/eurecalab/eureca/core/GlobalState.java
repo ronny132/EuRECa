@@ -11,7 +11,6 @@ import java.util.TreeSet;
 import android.app.Application;
 import android.graphics.Bitmap;
 
-import com.bignerdranch.expandablerecyclerview.Model.ParentObject;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -20,7 +19,7 @@ import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
 
 public class GlobalState extends Application {
 	private Recording playingRecording;
-	private List<ParentObject> filteredCategories;
+	private List<Category> filteredCategories;
 	private Collection<Category> categories;
 	private User authenticatedUser;
 
@@ -60,11 +59,11 @@ public class GlobalState extends Application {
 		}
 	}
 	
-	public void setFilteredCategories(List<ParentObject> categories) {
+	public void setFilteredCategories(List<Category> categories) {
 		this.filteredCategories = categories;
 	}
 
-	public List<ParentObject> getFilteredCategories() {
+	public List<Category> getFilteredCategories() {
 		return filteredCategories;
 	}
 	

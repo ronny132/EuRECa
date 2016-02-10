@@ -59,7 +59,6 @@ public class ImageDownloader extends AsyncTask<Void, Void, Void> implements Tran
 
     @Override
     public void onProgressChanged(int id, long bytesCurrent, long bytesTotal) {
-        int percentage = (int) (bytesCurrent / bytesTotal * 100);
     }
 
     @Override

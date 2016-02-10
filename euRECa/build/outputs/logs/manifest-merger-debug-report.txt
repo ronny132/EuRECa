@@ -37,7 +37,7 @@ MERGED from [com.google.android.gms:play-services-identity:8.4.0] C:\Android\And
 MERGED from [com.google.android.gms:play-services-base:8.4.0] C:\Android\Android Studio Projects\EuRECa\euRECa\build\intermediates\exploded-aar\com.google.android.gms\play-services-base\8.4.0\AndroidManifest.xml:18:5-42
 MERGED from [com.google.android.gms:play-services-basement:8.4.0] C:\Android\Android Studio Projects\EuRECa\euRECa\build\intermediates\exploded-aar\com.google.android.gms\play-services-basement\8.4.0\AndroidManifest.xml:18:5-42
 MERGED from [com.android.support:support-v4:23.1.1] C:\Android\Android Studio Projects\EuRECa\euRECa\build\intermediates\exploded-aar\com.android.support\support-v4\23.1.1\AndroidManifest.xml:20:5-43
-MERGED from [com.bignerdranch.android:expandablerecyclerview:1.0.3] C:\Android\Android Studio Projects\EuRECa\euRECa\build\intermediates\exploded-aar\com.bignerdranch.android\expandablerecyclerview\1.0.3\AndroidManifest.xml:7:5-9:41
+MERGED from [com.bignerdranch.android:expandablerecyclerview:2.0.4] C:\Android\Android Studio Projects\EuRECa\euRECa\build\intermediates\exploded-aar\com.bignerdranch.android\expandablerecyclerview\2.0.4\AndroidManifest.xml:7:5-9:41
 MERGED from [com.android.support:recyclerview-v7:23.1.1] C:\Android\Android Studio Projects\EuRECa\euRECa\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\23.1.1\AndroidManifest.xml:20:5-43
 MERGED from [com.android.support:support-v4:23.1.1] C:\Android\Android Studio Projects\EuRECa\euRECa\build\intermediates\exploded-aar\com.android.support\support-v4\23.1.1\AndroidManifest.xml:20:5-43
 	android:targetSdkVersion
@@ -98,7 +98,6 @@ MERGED from [com.android.support:support-v4:23.1.1] C:\Android\Android Studio Pr
 MERGED from [com.google.android.gms:play-services-identity:8.4.0] C:\Android\Android Studio Projects\EuRECa\euRECa\build\intermediates\exploded-aar\com.google.android.gms\play-services-identity\8.4.0\AndroidManifest.xml:19:5-20
 MERGED from [com.google.android.gms:play-services-basement:8.4.0] C:\Android\Android Studio Projects\EuRECa\euRECa\build\intermediates\exploded-aar\com.google.android.gms\play-services-basement\8.4.0\AndroidManifest.xml:20:5-24:19
 MERGED from [com.android.support:support-v4:23.1.1] C:\Android\Android Studio Projects\EuRECa\euRECa\build\intermediates\exploded-aar\com.android.support\support-v4\23.1.1\AndroidManifest.xml:22:5-20
-MERGED from [com.bignerdranch.android:expandablerecyclerview:1.0.3] C:\Android\Android Studio Projects\EuRECa\euRECa\build\intermediates\exploded-aar\com.bignerdranch.android\expandablerecyclerview\1.0.3\AndroidManifest.xml:11:5-14:19
 MERGED from [com.android.support:support-v4:23.1.1] C:\Android\Android Studio Projects\EuRECa\euRECa\build\intermediates\exploded-aar\com.android.support\support-v4\23.1.1\AndroidManifest.xml:22:5-20
 	android:supportsRtl
 		ADDED from C:\Android\Android Studio Projects\EuRECa\euRECa\src\main\AndroidManifest.xml:26:9-35

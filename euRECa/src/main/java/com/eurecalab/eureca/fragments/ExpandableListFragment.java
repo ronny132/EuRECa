@@ -63,8 +63,6 @@ public class ExpandableListFragment extends Fragment implements OnClickListener,
         }
         else{
             adapter = new CategoryAdapter(getActivity(), gs.getFilteredCategories());
-            adapter.setParentAndIconExpandOnClick(true);
-            adapter.setParentClickableViewAnimationDefaultDuration();
             recyclerView.setAdapter(adapter);
         }
 
@@ -130,9 +128,7 @@ public class ExpandableListFragment extends Fragment implements OnClickListener,
     @Override
     public void callback(Object... args) {
         adapter = new CategoryAdapter(getActivity(), gs.getFilteredCategories());
-        adapter.setParentAndIconExpandOnClick(true);
-        adapter.setParentClickableViewAnimationDefaultDuration();
         recyclerView.setAdapter(adapter);
-//        adapter.notifyDataSetChanged();
+        adapter.notifyDataSetChanged();
     }
 }

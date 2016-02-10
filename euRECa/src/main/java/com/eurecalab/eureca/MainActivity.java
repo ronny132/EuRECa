@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.TreeSet;
 
 import com.android.vending.billing.IInAppBillingService;
-import com.bignerdranch.expandablerecyclerview.Model.ParentObject;
 import com.eurecalab.eureca.constants.GenericConstants;
 import com.eurecalab.eureca.constants.PermissionConstants;
 import com.eurecalab.eureca.core.Category;
@@ -179,7 +178,7 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         GlobalState gs = (GlobalState) getApplication();
         Collection<Category> categories = gs.getCategories();
-        List<ParentObject> filteredCategories = new LinkedList<>();
+        List<Category> filteredCategories = new LinkedList<>();
         if (categories != null) {
             for (Category category : categories) {
                 List<Recording> recordings = category.getRecordings();
@@ -189,11 +188,9 @@ public class MainActivity extends AppCompatActivity {
                 filteredCategories.add(category);
             }
         }
-        Collections.sort(filteredCategories, new Comparator<ParentObject>() {
+        Collections.sort(filteredCategories, new Comparator<Category>() {
             @Override
-            public int compare(ParentObject lhs, ParentObject rhs) {
-                Category c1 = (Category) lhs;
-                Category c2 = (Category) rhs;
+            public int compare(Category c1, Category c2) {
                 return c1.getSortIndex() - c2.getSortIndex();
             }
         });

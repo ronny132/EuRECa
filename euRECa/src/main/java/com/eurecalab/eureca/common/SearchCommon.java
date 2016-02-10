@@ -51,10 +51,7 @@ public class SearchCommon {
                         }
                     }
                     if (categoryClone.size() > 0) {
-                        categoryClone.setRecordingListVisible(true);
                         gs.getFilteredCategories().add(categoryClone);
-                    } else {
-                        categoryClone.setRecordingListVisible(false);
                     }
                 }
                 adapter.notifyDataSetChanged();

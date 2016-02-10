@@ -8,28 +8,25 @@ import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBAttribut
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBHashKey;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBIgnore;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBTable;
-import com.bignerdranch.expandablerecyclerview.Model.ParentObject;
+import com.bignerdranch.expandablerecyclerview.Model.ParentListItem;
 
 @DynamoDBTable(tableName = "Category")
-public class Category implements Comparable<Category>, Serializable, ParentObject{
+public class Category implements Comparable<Category>, Serializable, ParentListItem{
 	
 	private String name;
 	private String iconFileName;
 	private List<Recording> recordings;
 	private String colorHex;
 	private int sortIndex;
-	private boolean recordingListVisible;
 	private List<Object> children;
 	
 	public Category() {
 		recordings = new LinkedList<Recording>();
-        recordingListVisible = false;
 	}
 	
 	public Category(String name) {
 		this.name = name;
 		recordings = new LinkedList<Recording>();
-        recordingListVisible = false;
 	}
 
 	public void setName(String name) {
@@ -61,10 +58,6 @@ public class Category implements Comparable<Category>, Serializable, ParentObjec
 		boolean ok = recordings.remove(recording);
         ok = ok & children.remove(recording);
         return ok;
-	}
-
-	public Recording getRercordingAt(int childPosition) {
-		return recordings.get(childPosition);
 	}
 
 	public int size() {
@@ -114,23 +107,15 @@ public class Category implements Comparable<Category>, Serializable, ParentObjec
         return sortIndex - otherSortIndex;
     }
 
-    public void setRecordingListVisible(boolean recordingListVisible) {
-        this.recordingListVisible = recordingListVisible;
-    }
-
-    @DynamoDBIgnore
-    public boolean isRecordingListVisible() {
-        return recordingListVisible;
-    }
-
-    @DynamoDBIgnore
+	@DynamoDBIgnore
 	@Override
-	public List<Object> getChildObjectList() {
-		return children;
+	public List<?> getChildItemList() {
+		return recordings;
 	}
 
+    @DynamoDBIgnore
 	@Override
-	public void setChildObjectList(List<Object> list) {
-        this.children = list;
+	public boolean isInitiallyExpanded() {
+		return false;
 	}
 }

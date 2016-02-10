@@ -1,15 +1,27 @@
 package com.eurecalab.eureca.ui;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
+import android.app.Activity;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
+import android.util.Log;
+import android.util.TypedValue;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bignerdranch.expandablerecyclerview.Adapter.ExpandableRecyclerAdapter;
-import com.bignerdranch.expandablerecyclerview.Model.ParentObject;
+import com.bignerdranch.expandablerecyclerview.Model.ParentListItem;
 import com.bignerdranch.expandablerecyclerview.ViewHolder.ChildViewHolder;
 import com.bignerdranch.expandablerecyclerview.ViewHolder.ParentViewHolder;
 import com.eurecalab.eureca.R;
@@ -30,42 +42,26 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
-import android.util.TypedValue;
-import android.view.LayoutInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 public class CategoryAdapter extends
         ExpandableRecyclerAdapter<CategoryAdapter.CategoryViewHolder, CategoryAdapter.RecordingViewHolder> implements DialogInterface.OnClickListener, Callable{
 
-    private List<ParentObject> items;
     private Activity context;
     protected ImageLoader imageLoader = ImageLoader.getInstance();
     private DisplayImageOptions options;
     private GlobalState globalState;
     private Recording selectedRecording;
     private LayoutInflater inflater;
+    private int selectedCategoryPosition;
+    private int selectedRecordingPosition;
 
-    public CategoryAdapter(Activity context, List<ParentObject> objects) {
-        super(context, objects);
-
-
-
-        this.items = objects;
+    public CategoryAdapter(Activity context, List<Category> objects) {
+        super(objects);
 
         this.context = context;
         if (context instanceof FragmentActivity) {
@@ -93,6 +89,7 @@ public class CategoryAdapter extends
             case DialogInterface.BUTTON_POSITIVE:
                 DynamoDBTask persister = new DynamoDBTask(context, selectedRecording, selectedRecording.getCategory(), null, this, DynamoDBAction.DELETE_RECORDING);
                 persister.execute();
+                notifyChildItemRemoved(selectedCategoryPosition, selectedRecordingPosition);
                 break;
             case DialogInterface.BUTTON_NEGATIVE:
                 break;
@@ -163,6 +160,10 @@ public class CategoryAdapter extends
             ImageView imageView = (ImageView) args[1];
             loadImage(path, imageView);
         }
+        else{
+//            notifyItemRemoved(mItemList.indexOf(selectedRecording));
+//            mItemList.remove(selectedRecording);
+        }
     }
 
     private void loadImage(File path, ImageView imageView) {
@@ -188,7 +189,7 @@ public class CategoryAdapter extends
     }
 
     @Override
-    public void onBindParentViewHolder(final CategoryViewHolder holder, int position, Object object) {
+    public void onBindParentViewHolder(final CategoryViewHolder holder, int position, ParentListItem object) {
         final Category category = (Category) object;
         holder.name.setText(category.getName());
         holder.handle.setBackgroundColor(Color.parseColor(category.getColorHex()));
@@ -269,6 +270,9 @@ public class CategoryAdapter extends
                 @Override
                 public void onClick(View v) {
                     selectedRecording = recording;
+                    Category selectedCategory = recording.getCategory();
+                    selectedRecordingPosition = selectedCategory.getRecordings().indexOf(recording);
+                    selectedCategoryPosition = selectedCategory.getSortIndex();
                     showMorePopup(v);
                 }
             });
