@@ -26,6 +26,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -47,7 +48,6 @@ public class UploadFragment extends Fragment implements View.OnClickListener, Ca
     private File file;
     private TextView pathTV;
     private GlobalState gs;
-    private TextView result;
     private Category oldCategory;
     private Recording oldRecording;
 
@@ -63,7 +63,6 @@ public class UploadFragment extends Fragment implements View.OnClickListener, Ca
         save = (Button) rootView.findViewById(R.id.save);
         soundCategory = (Spinner) rootView.findViewById(R.id.soundCategory);
         pathTV = (TextView) rootView.findViewById(R.id.pathTV);
-        result = (TextView) rootView.findViewById(R.id.result);
 
         gs = (GlobalState) getActivity().getApplication();
         if (gs.getCategories() == null || gs.getCategories().isEmpty()) {
@@ -81,7 +80,7 @@ public class UploadFragment extends Fragment implements View.OnClickListener, Ca
 
         Intent intent = getActivity().getIntent();
         if (Intent.ACTION_SEND.equals(intent.getAction())) {
-            Uri uri = (Uri) intent.getParcelableExtra(Intent.EXTRA_STREAM);
+            Uri uri = intent.getParcelableExtra(Intent.EXTRA_STREAM);
             if (uri != null) {
                 String path = FileCommon.getPathfromUri(uri);
                 file = new File(path);
@@ -110,9 +109,9 @@ public class UploadFragment extends Fragment implements View.OnClickListener, Ca
             String name = soundName.getText().toString();
 
             if (file == null || pathTV.getText().length() == 0) {
-                result.setText(getString(R.string.select_a_file));
+                Snackbar.make(pathTV, getString(R.string.select_a_file), Snackbar.LENGTH_LONG).show();
             } else if (!checkFile(file)) {
-                result.setText(getString(R.string.check_file));
+                Snackbar.make(pathTV, getString(R.string.check_file), Snackbar.LENGTH_LONG).show();
             } else {
                 checkName(name);
             }
@@ -179,20 +178,17 @@ public class UploadFragment extends Fragment implements View.OnClickListener, Ca
         persister.execute();
 
         clear();
-        result.setText(getString(R.string.upload_ok));
+        Snackbar.make(pathTV, getString(R.string.upload_ok), Snackbar.LENGTH_LONG).show();
     }
 
     private boolean checkFile(File file) {
         long bytes = file.length();
-        if (bytes < GenericConstants.MAX_ACCEPTED_FILESIZE) {
-            return true;
-        }
-        return false;
+        return bytes < GenericConstants.MAX_ACCEPTED_FILESIZE;
     }
 
     private void checkName(String name) {
         if (name.trim().length() == 0) {
-            result.setText(getString(R.string.empty_name));
+            Snackbar.make(pathTV, getString(R.string.empty_name), Snackbar.LENGTH_LONG).show();
         } else {
             checkNameAlreadyExisting();
         }
@@ -209,10 +205,10 @@ public class UploadFragment extends Fragment implements View.OnClickListener, Ca
                     if (ok) {
                         upload();
                     } else {
-                        result.setText(getString(R.string.check_name));
+                        Snackbar.make(pathTV, getString(R.string.check_name), Snackbar.LENGTH_LONG).show();
                     }
                 } else {
-                    result.setText(getString(R.string.check_name));
+                    Snackbar.make(pathTV, getString(R.string.check_name), Snackbar.LENGTH_LONG).show();
                 }
             }
         }, DynamoDBAction.FIND_RECORDING);

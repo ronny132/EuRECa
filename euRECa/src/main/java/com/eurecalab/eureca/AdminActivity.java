@@ -4,7 +4,6 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.StringTokenizer;
 
@@ -15,8 +14,6 @@ import com.eurecalab.eureca.core.Callable;
 import com.eurecalab.eureca.core.Category;
 import com.eurecalab.eureca.core.GlobalState;
 import com.eurecalab.eureca.core.Recording;
-import com.eurecalab.eureca.core.Share;
-import com.eurecalab.eureca.core.ShareClassification;
 import com.eurecalab.eureca.net.CategoriesAsyncTaskAdmin;
 import com.eurecalab.eureca.net.DynamoDBFavoritesTask;
 import com.eurecalab.eureca.net.DynamoDBTask;
@@ -38,6 +35,7 @@ import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -48,7 +46,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 @SuppressLint("NewApi")
 public class AdminActivity extends AppCompatActivity implements Callable, OnClickListener, GoogleApiClient.OnConnectionFailedListener {
@@ -128,7 +125,7 @@ public class AdminActivity extends AppCompatActivity implements Callable, OnClic
 
     private void restoreCategories() {
         Category cat = new Category();
-        cat.setName("Youtube");
+        cat.setName(GenericConstants.YOUTUBE_CATEGORY);
         cat.setColorHex("#EE111A");
         cat.setIconFileName("youtube_logo.png");
         cat.setSortIndex(GenericConstants.YOUTUBE_SORT_INDEX);
@@ -136,7 +133,7 @@ public class AdminActivity extends AppCompatActivity implements Callable, OnClic
         persister.execute();
 
         cat = new Category();
-        cat.setName("Disney");
+        cat.setName(GenericConstants.DISNEY_CATEGORY);
         cat.setColorHex("#006BB3");
         cat.setIconFileName("disney_logo.png");
         cat.setSortIndex(GenericConstants.DISNEY_SORT_INDEX);
@@ -144,7 +141,7 @@ public class AdminActivity extends AppCompatActivity implements Callable, OnClic
         persister.execute();
 
         cat = new Category();
-        cat.setName("Cartoni");
+        cat.setName(GenericConstants.CARTOONS_CATEGORY);
         cat.setColorHex("#FF7800");
         cat.setIconFileName("cartoon_logo.png");
         cat.setSortIndex(GenericConstants.CARTOONS_SORT_INDEX);
@@ -152,7 +149,7 @@ public class AdminActivity extends AppCompatActivity implements Callable, OnClic
         persister.execute();
 
         cat = new Category();
-        cat.setName("Film");
+        cat.setName(GenericConstants.MOVIE_CATEGORY);
         cat.setColorHex("#FFC107");
         cat.setIconFileName("movie_logo.png");
         cat.setSortIndex(GenericConstants.MOVIE_SORT_INDEX);
@@ -160,7 +157,7 @@ public class AdminActivity extends AppCompatActivity implements Callable, OnClic
         persister.execute();
 
         cat = new Category();
-        cat.setName("Politici");
+        cat.setName(GenericConstants.POLITICS_CATEGORY);
         cat.setColorHex("#333333");
         cat.setIconFileName("politics_logo.png");
         cat.setSortIndex(GenericConstants.POLITICS_SORT_INDEX);
@@ -168,7 +165,7 @@ public class AdminActivity extends AppCompatActivity implements Callable, OnClic
         persister.execute();
 
         cat = new Category();
-        cat.setName("Calcio");
+        cat.setName(GenericConstants.SOCCER_CATEGORY);
         cat.setColorHex("#007A08");
         cat.setIconFileName("soccer_logo.png");
         cat.setSortIndex(GenericConstants.SOCCER_SORT_INDEX);
@@ -176,7 +173,7 @@ public class AdminActivity extends AppCompatActivity implements Callable, OnClic
         persister.execute();
 
         cat = new Category();
-        cat.setName("Dialetti");
+        cat.setName(GenericConstants.DIALETTI_CATEGORY);
         cat.setColorHex("#521E42");
         cat.setIconFileName("calabria_logo.png");
         cat.setSortIndex(GenericConstants.DIALETTI_SORT_INDEX);
@@ -184,7 +181,7 @@ public class AdminActivity extends AppCompatActivity implements Callable, OnClic
         persister.execute();
 
         cat = new Category();
-        cat.setName("Serie Tv");
+        cat.setName(GenericConstants.TV_SERIES_CATEGORY);
         cat.setColorHex("#6994a8");
         cat.setIconFileName("tv_series_logo.png");
         cat.setSortIndex(GenericConstants.TV_SERIES_SORT_INDEX);
@@ -192,7 +189,7 @@ public class AdminActivity extends AppCompatActivity implements Callable, OnClic
         persister.execute();
 
         cat = new Category();
-        cat.setName("Effetti Sonori");
+        cat.setName(GenericConstants.SOUND_EFFECTS_CATEGORY);
         cat.setColorHex("#B56D2F");
         cat.setIconFileName("sound_logo.png");
         cat.setSortIndex(GenericConstants.SOUND_EFFECTS_SORT_INDEX);
@@ -210,39 +207,39 @@ public class AdminActivity extends AppCompatActivity implements Callable, OnClic
 
     private void changeCategoriesColorAndIcon() {
         for (Category cat : gs.getCategories()) {
-            if (cat.getName().equals("Youtube")) {
+            if (cat.getName().equals(GenericConstants.YOUTUBE_CATEGORY)) {
                 cat.setColorHex("#EE111A");
                 cat.setIconFileName("youtube_logo.png");
                 cat.setSortIndex(GenericConstants.YOUTUBE_SORT_INDEX);
-            } else if (cat.getName().equals("Disney")) {
+            } else if (cat.getName().equals(GenericConstants.DISNEY_CATEGORY)) {
                 cat.setColorHex("#006BB3");
                 cat.setIconFileName("disney_logo.png");
                 cat.setSortIndex(GenericConstants.DISNEY_SORT_INDEX);
-            } else if (cat.getName().equals("Cartoni")) {
+            } else if (cat.getName().equals(GenericConstants.CARTOONS_CATEGORY)) {
                 cat.setColorHex("#FF7800");
                 cat.setIconFileName("cartoon_logo.png");
                 cat.setSortIndex(GenericConstants.CARTOONS_SORT_INDEX);
-            } else if (cat.getName().equals("Film")) {
+            } else if (cat.getName().equals(GenericConstants.MOVIE_CATEGORY)) {
                 cat.setColorHex("#FFC107");
                 cat.setIconFileName("movie_logo.png");
                 cat.setSortIndex(GenericConstants.MOVIE_SORT_INDEX);
-            } else if (cat.getName().equals("Politici")) {
+            } else if (cat.getName().equals(GenericConstants.POLITICS_CATEGORY)) {
                 cat.setColorHex("#333333");
                 cat.setIconFileName("politics_logo.png");
                 cat.setSortIndex(GenericConstants.POLITICS_SORT_INDEX);
-            } else if (cat.getName().equals("Calcio")) {
+            } else if (cat.getName().equals(GenericConstants.SOCCER_CATEGORY)) {
                 cat.setColorHex("#007A08");
                 cat.setIconFileName("soccer_logo.png");
                 cat.setSortIndex(GenericConstants.SOCCER_SORT_INDEX);
-            } else if (cat.getName().equals("Dialetti")) {
+            } else if (cat.getName().equals(GenericConstants.DIALETTI_CATEGORY)) {
                 cat.setColorHex("#521E42");
                 cat.setIconFileName("calabria_logo.png");
                 cat.setSortIndex(GenericConstants.DIALETTI_SORT_INDEX);
-            } else if (cat.getName().equals("Serie Tv")) {
+            } else if (cat.getName().equals(GenericConstants.TV_SERIES_CATEGORY)) {
                 cat.setColorHex("#6994a8");
                 cat.setIconFileName("tv_series_logo.png");
                 cat.setSortIndex(GenericConstants.TV_SERIES_SORT_INDEX);
-            } else if (cat.getName().equals("Effetti Sonori")) {
+            } else if (cat.getName().equals(GenericConstants.SOUND_EFFECTS_CATEGORY)) {
                 cat.setColorHex("#B56D2F");
                 cat.setIconFileName("sound_logo.png");
                 cat.setSortIndex(GenericConstants.SOUND_EFFECTS_SORT_INDEX);
@@ -526,19 +523,7 @@ public class AdminActivity extends AppCompatActivity implements Callable, OnClic
     }
 
     private void getUserFavorites() {
-        DynamoDBFavoritesTask task = new DynamoDBFavoritesTask(this, gs.getAuthenticatedUser(),
-                GenericConstants.DEFAULT_SEARCH_LOWER_BOUND, GenericConstants.DEFAULT_SEARCH_LIMIT, new Callable() {
-            @Override
-            public void callback(Object... args) {
-                if(args != null && args.length == 1) {
-                    List<Recording> result = (List<Recording>) args[0];
-                    for (Recording rec : result) {
-                        Log.v("RECORDING", rec.getName());
-                    }
-                }
-            }
-        }, DynamoDBAction.GET_USER_FAVORITES);
-        task.execute();
+
     }
 
     private void deleteUnusedFiles() {
@@ -569,7 +554,7 @@ public class AdminActivity extends AppCompatActivity implements Callable, OnClic
 
     private void deleteUnused(Set<String> used, List<String> searchable) {
         List<String> toDelete = findUnused(used, searchable);
-        Toast.makeText(this, "Cancellati "+toDelete.size()+" file", Toast.LENGTH_LONG).show();
+        Snackbar.make(bonifica, "Cancellati " + toDelete.size() + " file", Snackbar.LENGTH_LONG).show();
 
         for (String file : toDelete) {
             Recording r = new Recording();
@@ -601,11 +586,9 @@ public class AdminActivity extends AppCompatActivity implements Callable, OnClic
     }
 
     private void handleSignInResult(GoogleSignInResult result) {
-        Log.d("AAAA", "handleSignInResult:" + result.isSuccess());
         if (result.isSuccess()) {
             // Signed in successfully, show authenticated UI.
             GoogleSignInAccount acct = result.getSignInAccount();
-            Log.d("AAAA", "Email: " + acct.getEmail());
             mStatusTextView.setText(acct.getDisplayName());
             updateUI(true);
             SignInTask task = new SignInTask(this, acct.getEmail(), acct.getDisplayName(), null);
@@ -635,7 +618,6 @@ public class AdminActivity extends AppCompatActivity implements Callable, OnClic
         if (opr.isDone()) {
             // If the user's cached credentials are valid, the OptionalPendingResult will be "done"
             // and the GoogleSignInResult will be available instantly.
-            Log.d("AAAA", "Got cached sign-in");
             GoogleSignInResult result = opr.get();
             handleSignInResult(result);
         } else {

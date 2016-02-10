@@ -23,9 +23,17 @@ public interface GenericConstants {
     int DIALETTI_SORT_INDEX = 8;
     int FAVORITES_SORT_INDEX = 9;
     String SELECTED_RECORDING = "selected recording";
-    Date DEFAULT_SEARCH_LOWER_BOUND = null;
-    int DEFAULT_SEARCH_LIMIT = 10;
+    int DEFAULT_USER_SEARCH_LIMIT = 15;
+    int DEFAULT_SEARCH_LIMIT = 15;
 
     String YOUTUBE_CATEGORY = "Youtube";
+    String DISNEY_CATEGORY = "Disney";
+    String MOVIE_CATEGORY = "Film";
+    String TV_SERIES_CATEGORY = "Serie TV";
+    String CARTOONS_CATEGORY = "Cartoni";
+    String SOCCER_CATEGORY = "Calcio";
+    String SOUND_EFFECTS_CATEGORY = "Effetti Sonori";
+    String POLITICS_CATEGORY = "Politici";
+    String DIALETTI_CATEGORY = "Dialetti";
     String FAVORITES_CATEGORY = "Preferiti";
 }

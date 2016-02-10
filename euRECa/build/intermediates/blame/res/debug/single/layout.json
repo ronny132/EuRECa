@@ -72,6 +72,10 @@
         "source": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.1.1\\res\\layout\\abc_screen_simple_overlay_action_mode.xml"
     },
     {
+        "merged": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\res\\merged\\debug\\layout\\file_new_dir_dialog_layout.xml",
+        "source": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\src\\main\\res\\layout\\file_new_dir_dialog_layout.xml"
+    },
+    {
         "merged": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\res\\merged\\debug\\layout\\design_layout_tab_text.xml",
         "source": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\exploded-aar\\com.android.support\\design\\23.1.1\\res\\layout\\design_layout_tab_text.xml"
     },
@@ -132,10 +136,6 @@
         "source": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.1.1\\res\\layout\\abc_search_view.xml"
     },
     {
-        "merged": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\res\\merged\\debug\\layout\\new_dir_dialog_layout.xml",
-        "source": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\src\\main\\res\\layout\\new_dir_dialog_layout.xml"
-    },
-    {
         "merged": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\res\\merged\\debug\\layout\\fragment_main.xml",
         "source": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\src\\main\\res\\layout\\fragment_main.xml"
     },
@@ -172,12 +172,12 @@
         "source": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.1.1\\res\\layout\\abc_screen_simple.xml"
     },
     {
-        "merged": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\res\\merged\\debug\\layout\\abc_screen_toolbar.xml",
-        "source": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.1.1\\res\\layout\\abc_screen_toolbar.xml"
-    },
-    {
         "merged": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\res\\merged\\debug\\layout\\abc_expanded_menu_layout.xml",
         "source": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.1.1\\res\\layout\\abc_expanded_menu_layout.xml"
+    },
+    {
+        "merged": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\res\\merged\\debug\\layout\\abc_screen_toolbar.xml",
+        "source": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.1.1\\res\\layout\\abc_screen_toolbar.xml"
     },
     {
         "merged": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\res\\merged\\debug\\layout\\abc_action_mode_close_item_material.xml",

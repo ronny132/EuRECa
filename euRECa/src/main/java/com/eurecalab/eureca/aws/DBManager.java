@@ -2,15 +2,12 @@ package com.eurecalab.eureca.aws;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
 
 import android.content.Context;
 
@@ -24,6 +21,7 @@ import com.amazonaws.regions.Region;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBAsyncClient;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import com.bignerdranch.expandablerecyclerview.Model.ParentObject;
 import com.eurecalab.eureca.R;
 import com.eurecalab.eureca.constants.GenericConstants;
 import com.eurecalab.eureca.core.Category;
@@ -122,7 +120,7 @@ public class DBManager {
         return result;
     }
 
-    public void downloadCategories(Collection<Category> categories, Collection<Category> categoriesFiltered, User user) {
+    public void downloadCategories(Collection<Category> categories, List<ParentObject> categoriesFiltered, User user) {
         DynamoDBScanExpression scanExpression = new DynamoDBScanExpression();
         PaginatedScanList<Category> result = mapper.scan(Category.class, scanExpression);
         categories.clear();
@@ -135,13 +133,22 @@ public class DBManager {
             }
 
             if(category.getName().equals(GenericConstants.FAVORITES_CATEGORY)){
-                List<Recording> favorites = getUserFavorites(user.getEmail(), null, GenericConstants.DEFAULT_SEARCH_LIMIT);
+                List<Recording> favorites = getUserFavorites(user.getEmail(), null, GenericConstants.DEFAULT_USER_SEARCH_LIMIT);
                 category.setRecordings(favorites);
             }
 
             categories.add(category);
             categoriesFiltered.add(category);
         }
+
+        Collections.sort(categoriesFiltered, new Comparator<ParentObject>() {
+            @Override
+            public int compare(ParentObject lhs, ParentObject rhs) {
+                Category c1 = (Category) lhs;
+                Category c2 = (Category) rhs;
+                return c1.getSortIndex() - c2.getSortIndex();
+            }
+        });
 
     }
 

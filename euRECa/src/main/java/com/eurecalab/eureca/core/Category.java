@@ -8,9 +8,10 @@ import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBAttribut
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBHashKey;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBIgnore;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBTable;
+import com.bignerdranch.expandablerecyclerview.Model.ParentObject;
 
 @DynamoDBTable(tableName = "Category")
-public class Category implements Comparable<Category>, Serializable{
+public class Category implements Comparable<Category>, Serializable, ParentObject{
 	
 	private String name;
 	private String iconFileName;
@@ -18,6 +19,7 @@ public class Category implements Comparable<Category>, Serializable{
 	private String colorHex;
 	private int sortIndex;
 	private boolean recordingListVisible;
+	private List<Object> children;
 	
 	public Category() {
 		recordings = new LinkedList<Recording>();
@@ -36,7 +38,9 @@ public class Category implements Comparable<Category>, Serializable{
 	
 	public void setRecordings(List<Recording> recordings) {
 		this.recordings = recordings;
-	}
+        children = new LinkedList<>();
+        children.addAll(recordings);
+    }
 	
 	@DynamoDBHashKey (attributeName = "Name")
 	public String getName() {
@@ -50,10 +54,13 @@ public class Category implements Comparable<Category>, Serializable{
 	
 	public void addRecording(Recording recording){
 		recordings.add(recording);
+        children.add(recording);
 	}
 	
 	public boolean removeRecording(Recording recording){
-		return recordings.remove(recording);
+		boolean ok = recordings.remove(recording);
+        ok = ok & children.remove(recording);
+        return ok;
 	}
 
 	public Recording getRercordingAt(int childPosition) {
@@ -115,4 +122,15 @@ public class Category implements Comparable<Category>, Serializable{
     public boolean isRecordingListVisible() {
         return recordingListVisible;
     }
+
+    @DynamoDBIgnore
+	@Override
+	public List<Object> getChildObjectList() {
+		return children;
+	}
+
+	@Override
+	public void setChildObjectList(List<Object> list) {
+        this.children = list;
+	}
 }

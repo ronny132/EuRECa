@@ -5,8 +5,8 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.media.Image;
 import android.os.AsyncTask;
+import android.support.design.widget.Snackbar;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferListener;
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferObserver;
@@ -54,8 +54,7 @@ public class ImageDownloader extends AsyncTask<Void, Void, Void> implements Tran
 
     @Override
     public void onError(int id, Exception ex) {
-        Toast.makeText(context, context.getString(R.string.download_error), Toast.LENGTH_LONG).show();
-
+        Snackbar.make(view, context.getString(R.string.download_error), Snackbar.LENGTH_LONG).show();
     }
 
     @Override

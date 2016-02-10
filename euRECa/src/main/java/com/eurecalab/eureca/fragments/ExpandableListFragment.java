@@ -57,14 +57,15 @@ public class ExpandableListFragment extends Fragment implements OnClickListener,
 
         gs = (GlobalState) getActivity().getApplication();
 
-        adapter = new CategoryAdapter(getActivity(), R.layout.category_layout_expanded, gs.getFilteredCategories());
-        recyclerView.setAdapter(adapter);
-
         if (gs.getCategories() == null || gs.getCategories().isEmpty()) {
             CategoriesAsyncTask task = new CategoriesAsyncTask(getActivity(), this);
             task.execute();
-            DynamoDBFavoritesTask favoritesTask = new DynamoDBFavoritesTask(getActivity(), gs.getAuthenticatedUser(), null,
-                    GenericConstants.DEFAULT_SEARCH_LIMIT, this, DynamoDBAction.GET_USER_FAVORITES);
+        }
+        else{
+            adapter = new CategoryAdapter(getActivity(), gs.getFilteredCategories());
+            adapter.setParentAndIconExpandOnClick(true);
+            adapter.setParentClickableViewAnimationDefaultDuration();
+            recyclerView.setAdapter(adapter);
         }
 
         recordButton = (FloatingActionButton) rootView.findViewById(R.id.fab);
@@ -128,6 +129,10 @@ public class ExpandableListFragment extends Fragment implements OnClickListener,
 
     @Override
     public void callback(Object... args) {
-        adapter.notifyDataSetChanged();
+        adapter = new CategoryAdapter(getActivity(), gs.getFilteredCategories());
+        adapter.setParentAndIconExpandOnClick(true);
+        adapter.setParentClickableViewAnimationDefaultDuration();
+        recyclerView.setAdapter(adapter);
+//        adapter.notifyDataSetChanged();
     }
 }

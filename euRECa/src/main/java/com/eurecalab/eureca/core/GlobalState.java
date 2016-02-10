@@ -2,11 +2,16 @@ package com.eurecalab.eureca.core;
 
 import java.io.IOException;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.TreeSet;
 
 import android.app.Application;
 import android.graphics.Bitmap;
 
+import com.bignerdranch.expandablerecyclerview.Model.ParentObject;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -15,14 +20,14 @@ import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
 
 public class GlobalState extends Application {
 	private Recording playingRecording;
-	private Collection<Category> filteredCategories;
+	private List<ParentObject> filteredCategories;
 	private Collection<Category> categories;
 	private User authenticatedUser;
 
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		filteredCategories = new TreeSet<>();
+		filteredCategories = new LinkedList<>();
 		categories = new TreeSet<>();
 		ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(
 				getApplicationContext())
@@ -55,11 +60,11 @@ public class GlobalState extends Application {
 		}
 	}
 	
-	public void setFilteredCategories(Collection<Category> categories) {
+	public void setFilteredCategories(List<ParentObject> categories) {
 		this.filteredCategories = categories;
 	}
 
-	public Collection<Category> getFilteredCategories() {
+	public List<ParentObject> getFilteredCategories() {
 		return filteredCategories;
 	}
 	

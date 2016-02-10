@@ -177,7 +177,7 @@ public class FileChooser extends ListActivity implements OnClickListener {
     private void createAndShowNewDirDialog() {
         AlertDialog.Builder builder = new Builder(this);
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View v = inflater.inflate(R.layout.new_dir_dialog_layout, null);
+        View v = inflater.inflate(R.layout.file_new_dir_dialog_layout, null);
         final Button okButton = (Button) v.findViewById(R.id.okButton);
         final Button annullaButton = (Button) v
                 .findViewById(R.id.annullaButton);

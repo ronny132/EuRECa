@@ -298,6 +298,7 @@
     <dimen name="design_tab_text_size_2line">12sp</dimen>
     <item format="float" name="disabled_alpha_material_dark" type="dimen">0.30</item>
     <item format="float" name="disabled_alpha_material_light" type="dimen">0.26</item>
+    <dimen name="fab_margin">16dp</dimen>
     <item format="float" name="highlight_alpha_material_colored" type="dimen">0.26</item>
     <item format="float" name="highlight_alpha_material_dark" type="dimen">0.20</item>
     <item format="float" name="highlight_alpha_material_light" type="dimen">0.12</item>
@@ -431,6 +432,7 @@
     <string name="tags_hint">whitespace separated</string>
     <string name="theme">Theme</string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_test">TestActivity</string>
     <string name="updating">Updating…</string>
     <string name="upgrade" translatable="false">Upgrade</string>
     <string name="upload_ok">Uploaded successfully</string>
@@ -480,6 +482,8 @@
         <item name="colorPrimary">@color/color_primary_red</item>
         <item name="colorButtonNormal">@color/color_primary_red</item>
     </style>
+    <style name="AppThemeRed.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+    <style name="AppThemeRed.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
     <style name="AppThemeRedReverse" parent="AppThemeReverse">
         <item name="colorAccent">@color/color_primary_red</item>
         <item name="colorButtonNormal">@color/color_primary_red</item>

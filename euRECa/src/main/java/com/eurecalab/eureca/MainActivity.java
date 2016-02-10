@@ -2,10 +2,14 @@ package com.eurecalab.eureca;
 
 import java.io.IOException;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.TreeSet;
 
 import com.android.vending.billing.IInAppBillingService;
+import com.bignerdranch.expandablerecyclerview.Model.ParentObject;
 import com.eurecalab.eureca.constants.GenericConstants;
 import com.eurecalab.eureca.constants.PermissionConstants;
 import com.eurecalab.eureca.core.Category;
@@ -32,7 +36,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
-import android.widget.Toast;
 
 @SuppressLint("NewApi")
 public class MainActivity extends AppCompatActivity {
@@ -75,7 +78,6 @@ public class MainActivity extends AppCompatActivity {
             // Should we show an explanation?
             if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                     Manifest.permission.READ_CONTACTS)) {
-                Toast.makeText(this, "Chi cazz e palla", Toast.LENGTH_LONG).show();
                 // Show an explanation to the user *asynchronously* -- don't block
                 // this thread waiting for the user's response! After the user
                 // sees the explanation, try again to request the permission.
@@ -177,7 +179,7 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         GlobalState gs = (GlobalState) getApplication();
         Collection<Category> categories = gs.getCategories();
-        Collection<Category> filteredCategories = new TreeSet<>();
+        List<ParentObject> filteredCategories = new LinkedList<>();
         if (categories != null) {
             for (Category category : categories) {
                 List<Recording> recordings = category.getRecordings();
@@ -187,6 +189,14 @@ public class MainActivity extends AppCompatActivity {
                 filteredCategories.add(category);
             }
         }
+        Collections.sort(filteredCategories, new Comparator<ParentObject>() {
+            @Override
+            public int compare(ParentObject lhs, ParentObject rhs) {
+                Category c1 = (Category) lhs;
+                Category c2 = (Category) rhs;
+                return c1.getSortIndex() - c2.getSortIndex();
+            }
+        });
         gs.setFilteredCategories(filteredCategories);
     }
 
