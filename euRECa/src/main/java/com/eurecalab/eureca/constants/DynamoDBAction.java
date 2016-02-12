@@ -11,4 +11,5 @@ public interface DynamoDBAction {
     int DELETE_RECORDING = 4;
     int FIND_RECORDING = 5;
     int GET_USER_FAVORITES = 6;
+    int GET_GLOBAL_FAVORITES = 7;
 }

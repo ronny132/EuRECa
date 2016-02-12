@@ -2,6 +2,7 @@
 <resources xmlns:ns1="urn:oasis:names:tc:xliff:document:1.2">
     <array name="tabLabels">
         <item>@string/home_tab</item>
+        <item>@string/charts_tab</item>
         <item>@string/settings_tab</item>
         <item>@string/upload_tab</item>
     </array>
@@ -362,6 +363,7 @@
     <string name="cancel">Cancel</string>
     <string name="category">Category: </string>
     <string name="character_counter_pattern" translatable="false">%1$d / %2$d</string>
+    <string name="charts_tab">CHARTS</string>
     <string name="check_file">The selected file is too big</string>
     <string name="check_name">A recording with this name already exists</string>
     <string name="choose">Choose</string>
@@ -432,7 +434,6 @@
     <string name="tags_hint">whitespace separated</string>
     <string name="theme">Theme</string>
     <string name="title_activity_main">MainActivity</string>
-    <string name="title_activity_test">TestActivity</string>
     <string name="updating">Updating…</string>
     <string name="upgrade" translatable="false">Upgrade</string>
     <string name="upload_ok">Uploaded successfully</string>

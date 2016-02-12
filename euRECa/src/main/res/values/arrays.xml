@@ -3,6 +3,7 @@
     
     <array name="tabLabels">
         <item>@string/home_tab</item>
+        <item>@string/charts_tab</item>
         <item>@string/settings_tab</item>
         <item>@string/upload_tab</item>
     </array>

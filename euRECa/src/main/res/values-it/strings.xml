@@ -52,4 +52,5 @@
 	<string name="parent_directory">…Cartella Superiore</string>
 	<string name="cancel">Annulla</string>
 	<string name="empty_name">Il nome è obbligatorio</string>
+	<string name="charts_tab">CLASSIFICHE</string>
 </resources>

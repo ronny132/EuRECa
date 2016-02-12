@@ -67,25 +67,29 @@ public class DBManager {
         mapper.save(share);
     }
 
-    public List<Recording> getUserFavorites(String username, Date lowerBound, int limit) {
+    public List<Recording> getFavorites(String username, Date lowerBound, int limit) {
+        String filterExpression = "";
+        Map<String, AttributeValue> eav = new HashMap<String, AttributeValue>();
+        if (username != null) { //recuperiamo i preferiti di quell'utente
+            eav.put(":user", new AttributeValue().withS(username));
+            filterExpression += " Username = :user";
+        }
+        if (lowerBound != null) {
+            eav.put(":date", new AttributeValue().withS(GenericConstants.DATE_FORMATTER.format(lowerBound)));
+            if (filterExpression.length() > 0) {
+                filterExpression += " and ";
+            }
+            filterExpression += " ShareDate > :date";
+        }
         List<ShareClassification> shareClassifications = new LinkedList<>();
         Map<Recording, Integer> shares = new HashMap<>();
 
-        Map<String, AttributeValue> eav = new HashMap<String, AttributeValue>();
-        eav.put(":user", new AttributeValue().withS(username));
+        DynamoDBScanExpression scanExpression = new DynamoDBScanExpression();
 
-        if(lowerBound != null){
-            eav.put(":date", new AttributeValue().withS(GenericConstants.DATE_FORMATTER.format(lowerBound)));
+        if (!eav.isEmpty()) {
+            scanExpression = scanExpression.withFilterExpression(filterExpression)
+                    .withExpressionAttributeValues(eav);
         }
-
-        String filterExpression = "Username = :user";
-        if(lowerBound != null){
-            filterExpression += " and ShareDate > :date";
-        }
-
-        DynamoDBScanExpression scanExpression = new DynamoDBScanExpression()
-                .withFilterExpression(filterExpression)
-                .withExpressionAttributeValues(eav);
 
         PaginatedScanList<Share> res = mapper.scan(Share.class, scanExpression);
 
@@ -131,8 +135,8 @@ public class DBManager {
                 recording.setCategory(category);
             }
 
-            if(category.getName().equals(GenericConstants.FAVORITES_CATEGORY)){
-                List<Recording> favorites = getUserFavorites(user.getEmail(), null, GenericConstants.DEFAULT_USER_SEARCH_LIMIT);
+            if (category.getName().equals(GenericConstants.FAVORITES_CATEGORY)) {
+                List<Recording> favorites = getFavorites(user.getEmail(), null, GenericConstants.DEFAULT_USER_SEARCH_LIMIT);
                 category.setRecordings(favorites);
             }
 

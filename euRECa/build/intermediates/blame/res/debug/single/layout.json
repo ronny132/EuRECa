@@ -64,12 +64,12 @@
         "source": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.1.1\\res\\layout\\notification_template_big_media_narrow.xml"
     },
     {
-        "merged": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\res\\merged\\debug\\layout\\abc_screen_simple_overlay_action_mode.xml",
-        "source": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.1.1\\res\\layout\\abc_screen_simple_overlay_action_mode.xml"
-    },
-    {
         "merged": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\res\\merged\\debug\\layout\\notification_media_cancel_action.xml",
         "source": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.1.1\\res\\layout\\notification_media_cancel_action.xml"
+    },
+    {
+        "merged": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\res\\merged\\debug\\layout\\abc_screen_simple_overlay_action_mode.xml",
+        "source": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.1.1\\res\\layout\\abc_screen_simple_overlay_action_mode.xml"
     },
     {
         "merged": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\res\\merged\\debug\\layout\\file_new_dir_dialog_layout.xml",
@@ -84,12 +84,12 @@
         "source": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.1.1\\res\\layout\\abc_popup_menu_item_layout.xml"
     },
     {
-        "merged": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\res\\merged\\debug\\layout\\design_navigation_menu_item.xml",
-        "source": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\exploded-aar\\com.android.support\\design\\23.1.1\\res\\layout\\design_navigation_menu_item.xml"
-    },
-    {
         "merged": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\res\\merged\\debug\\layout\\color_adapter_layout.xml",
         "source": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\src\\main\\res\\layout\\color_adapter_layout.xml"
+    },
+    {
+        "merged": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\res\\merged\\debug\\layout\\design_navigation_menu_item.xml",
+        "source": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\exploded-aar\\com.android.support\\design\\23.1.1\\res\\layout\\design_navigation_menu_item.xml"
     },
     {
         "merged": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\res\\merged\\debug\\layout\\notification_template_part_chronometer.xml",
@@ -100,20 +100,24 @@
         "source": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.1.1\\res\\layout\\notification_media_action.xml"
     },
     {
-        "merged": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\res\\merged\\debug\\layout\\abc_action_menu_layout.xml",
-        "source": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.1.1\\res\\layout\\abc_action_menu_layout.xml"
+        "merged": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\res\\merged\\debug\\layout\\fragment_chart.xml",
+        "source": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\src\\main\\res\\layout\\fragment_chart.xml"
     },
     {
         "merged": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\res\\merged\\debug\\layout\\abc_list_menu_item_layout.xml",
         "source": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.1.1\\res\\layout\\abc_list_menu_item_layout.xml"
     },
     {
-        "merged": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\res\\merged\\debug\\layout\\fragment_login.xml",
-        "source": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\src\\main\\res\\layout\\fragment_login.xml"
+        "merged": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\res\\merged\\debug\\layout\\abc_action_menu_layout.xml",
+        "source": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.1.1\\res\\layout\\abc_action_menu_layout.xml"
     },
     {
         "merged": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\res\\merged\\debug\\layout\\file_chooser_layout.xml",
         "source": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\src\\main\\res\\layout\\file_chooser_layout.xml"
+    },
+    {
+        "merged": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\res\\merged\\debug\\layout\\fragment_login.xml",
+        "source": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\src\\main\\res\\layout\\fragment_login.xml"
     },
     {
         "merged": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\res\\merged\\debug\\layout\\recording_layout.xml",
@@ -124,12 +128,12 @@
         "source": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\exploded-aar\\com.android.support\\design\\23.1.1\\res\\layout\\design_navigation_item_subheader.xml"
     },
     {
-        "merged": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\res\\merged\\debug\\layout\\abc_alert_dialog_button_bar_material.xml",
-        "source": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.1.1\\res\\layout\\abc_alert_dialog_button_bar_material.xml"
-    },
-    {
         "merged": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\res\\merged\\debug\\layout\\abc_activity_chooser_view_list_item.xml",
         "source": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.1.1\\res\\layout\\abc_activity_chooser_view_list_item.xml"
+    },
+    {
+        "merged": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\res\\merged\\debug\\layout\\abc_alert_dialog_button_bar_material.xml",
+        "source": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.1.1\\res\\layout\\abc_alert_dialog_button_bar_material.xml"
     },
     {
         "merged": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\res\\merged\\debug\\layout\\abc_search_view.xml",
@@ -144,24 +148,24 @@
         "source": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\exploded-aar\\com.android.support\\design\\23.1.1\\res\\layout\\design_navigation_item.xml"
     },
     {
-        "merged": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\res\\merged\\debug\\layout\\fragment_settings.xml",
-        "source": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\src\\main\\res\\layout\\fragment_settings.xml"
-    },
-    {
         "merged": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\res\\merged\\debug\\layout\\activity_main.xml",
         "source": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\src\\main\\res\\layout\\activity_main.xml"
     },
     {
-        "merged": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\res\\merged\\debug\\layout\\fragment_admin.xml",
-        "source": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\src\\main\\res\\layout\\fragment_admin.xml"
+        "merged": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\res\\merged\\debug\\layout\\fragment_settings.xml",
+        "source": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\src\\main\\res\\layout\\fragment_settings.xml"
+    },
+    {
+        "merged": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\res\\merged\\debug\\layout\\notification_template_part_time.xml",
+        "source": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.1.1\\res\\layout\\notification_template_part_time.xml"
     },
     {
         "merged": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\res\\merged\\debug\\layout\\select_dialog_item_material.xml",
         "source": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.1.1\\res\\layout\\select_dialog_item_material.xml"
     },
     {
-        "merged": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\res\\merged\\debug\\layout\\notification_template_part_time.xml",
-        "source": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.1.1\\res\\layout\\notification_template_part_time.xml"
+        "merged": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\res\\merged\\debug\\layout\\fragment_admin.xml",
+        "source": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\src\\main\\res\\layout\\fragment_admin.xml"
     },
     {
         "merged": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\res\\merged\\debug\\layout\\abc_action_mode_bar.xml",
@@ -184,28 +188,28 @@
         "source": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.1.1\\res\\layout\\abc_action_mode_close_item_material.xml"
     },
     {
-        "merged": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\res\\merged\\debug\\layout\\design_navigation_menu.xml",
-        "source": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\exploded-aar\\com.android.support\\design\\23.1.1\\res\\layout\\design_navigation_menu.xml"
+        "merged": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\res\\merged\\debug\\layout\\abc_activity_chooser_view.xml",
+        "source": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.1.1\\res\\layout\\abc_activity_chooser_view.xml"
     },
     {
         "merged": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\res\\merged\\debug\\layout\\abc_search_dropdown_item_icons_2line.xml",
         "source": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.1.1\\res\\layout\\abc_search_dropdown_item_icons_2line.xml"
     },
     {
-        "merged": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\res\\merged\\debug\\layout\\abc_activity_chooser_view.xml",
-        "source": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.1.1\\res\\layout\\abc_activity_chooser_view.xml"
+        "merged": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\res\\merged\\debug\\layout\\design_navigation_menu.xml",
+        "source": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\exploded-aar\\com.android.support\\design\\23.1.1\\res\\layout\\design_navigation_menu.xml"
     },
     {
         "merged": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\res\\merged\\debug\\layout\\abc_action_bar_title_item.xml",
         "source": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.1.1\\res\\layout\\abc_action_bar_title_item.xml"
     },
     {
-        "merged": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\res\\merged\\debug\\layout\\design_navigation_item_header.xml",
-        "source": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\exploded-aar\\com.android.support\\design\\23.1.1\\res\\layout\\design_navigation_item_header.xml"
-    },
-    {
         "merged": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\res\\merged\\debug\\layout\\fragment_upload.xml",
         "source": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\src\\main\\res\\layout\\fragment_upload.xml"
+    },
+    {
+        "merged": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\res\\merged\\debug\\layout\\design_navigation_item_header.xml",
+        "source": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\exploded-aar\\com.android.support\\design\\23.1.1\\res\\layout\\design_navigation_item_header.xml"
     },
     {
         "merged": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\res\\merged\\debug\\layout\\abc_alert_dialog_material.xml",
@@ -220,12 +224,12 @@
         "source": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.1.1\\res\\layout\\abc_list_menu_item_radio.xml"
     },
     {
-        "merged": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\res\\merged\\debug\\layout\\abc_screen_content_include.xml",
-        "source": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.1.1\\res\\layout\\abc_screen_content_include.xml"
-    },
-    {
         "merged": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\res\\merged\\debug\\layout\\abc_action_bar_view_list_nav_layout.xml",
         "source": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.1.1\\res\\layout\\abc_action_bar_view_list_nav_layout.xml"
+    },
+    {
+        "merged": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\res\\merged\\debug\\layout\\abc_screen_content_include.xml",
+        "source": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.1.1\\res\\layout\\abc_screen_content_include.xml"
     },
     {
         "merged": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\res\\merged\\debug\\layout\\design_menu_item_action_area.xml",

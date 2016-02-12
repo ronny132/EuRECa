@@ -1,5 +1,6 @@
 package com.eurecalab.eureca.ui;
 
+import com.eurecalab.eureca.fragments.ChartFragment;
 import com.eurecalab.eureca.fragments.ExpandableListFragment;
 import com.eurecalab.eureca.fragments.SettingsFragment;
 import com.eurecalab.eureca.fragments.UploadFragment;
@@ -14,8 +15,9 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 	private int tabLength;
 	
 	private final static int MAIN_FRAGMENT = 0;
-	private final static int SETTINGS_FRAGMENT = 1;
-	private final static int UPLOAD_FRAGMENT = 2;
+    private final static int CHARTS_FRAGMENT= 1;
+	private final static int SETTINGS_FRAGMENT = 2;
+	private final static int UPLOAD_FRAGMENT = 3;
 
 	public ViewPagerAdapter(FragmentManager fm, String mTitles[],
 			int mNumbOfTabsumb) {
@@ -26,18 +28,16 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
 	@Override
 	public Fragment getItem(int position) {
-		if (position == MAIN_FRAGMENT) {
-			ExpandableListFragment fragment = new ExpandableListFragment();
-			return fragment;
-		}
-		else if(position == SETTINGS_FRAGMENT){
-			SettingsFragment fragment = new SettingsFragment();
-			return fragment;
-		}
-		else if(position == UPLOAD_FRAGMENT){
-			UploadFragment fragment = new UploadFragment();
-			return fragment;
-		}
+        switch (position){
+            case MAIN_FRAGMENT:
+                return new ExpandableListFragment();
+            case SETTINGS_FRAGMENT:
+                return new SettingsFragment();
+            case UPLOAD_FRAGMENT:
+                return new UploadFragment();
+            case CHARTS_FRAGMENT:
+                return new ChartFragment();
+        }
 		return null;
 	}
 	

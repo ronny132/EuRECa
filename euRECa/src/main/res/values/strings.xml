@@ -61,5 +61,5 @@
     <string name="ok" translatable="false">OK</string>
     <string name="cancel">Cancel</string>
     <string name="empty_name">The name is required</string>
-    <string name="title_activity_test">TestActivity</string>
+    <string name="charts_tab">CHARTS</string>
 </resources>

@@ -9,13 +9,10 @@ import com.eurecalab.eureca.constants.DynamoDBAction;
 import com.eurecalab.eureca.core.Callable;
 import com.eurecalab.eureca.core.GlobalState;
 import com.eurecalab.eureca.core.Recording;
-import com.eurecalab.eureca.core.ShareClassification;
 import com.eurecalab.eureca.core.User;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 public class DynamoDBFavoritesTask extends AsyncTask<Void, Void, Void> {
     private Context context;
@@ -43,8 +40,10 @@ public class DynamoDBFavoritesTask extends AsyncTask<Void, Void, Void> {
         manager.connect();
         switch (action) {
             case DynamoDBAction.GET_USER_FAVORITES:
-                searchResult = manager.getUserFavorites(user.getEmail(), lowerBound, limit);
+                searchResult = manager.getFavorites(user.getEmail(), lowerBound, limit);
                 break;
+            case DynamoDBAction.GET_GLOBAL_FAVORITES:
+                searchResult = manager.getFavorites(null, lowerBound, limit);
         }
         return null;
     }
