@@ -15,9 +15,6 @@ import com.eurecalab.eureca.core.User;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 
-/**
- * Created by MeringoloRo on 24/01/2016.
- */
 public class SignInTask extends AsyncTask<Void, Void, Void> implements GoogleApiClient.OnConnectionFailedListener {
     private GlobalState gs;
     private ProgressDialog dialog;
@@ -28,8 +25,8 @@ public class SignInTask extends AsyncTask<Void, Void, Void> implements GoogleApi
     private Callable callable;
 
     public SignInTask(Activity context, String email, String name, Callable callable) {
-        this.context = (FragmentActivity) context;
-        gs = (GlobalState) ((Activity) context).getApplication();
+        this.context = context;
+        gs = (GlobalState) context.getApplication();
         this.email = email;
         this.name = name;
         this.callable = callable;
@@ -40,6 +37,7 @@ public class SignInTask extends AsyncTask<Void, Void, Void> implements GoogleApi
         loadFromAws = gs.getAuthenticatedUser() == null;
         dialog = new ProgressDialog(context);
         dialog.setMessage(context.getString(R.string.signing));
+        dialog.setCancelable(false);
         if (!context.isFinishing()) {
             dialog.show();
         }
@@ -66,7 +64,6 @@ public class SignInTask extends AsyncTask<Void, Void, Void> implements GoogleApi
         if (callable != null) {
             callable.callback();
         }
-//        Toast.makeText(context,email+" is "+(gs.getAuthenticatedUser().isProUser()?"pro user":"free user"),Toast.LENGTH_LONG).show();
     }
 
     @Override

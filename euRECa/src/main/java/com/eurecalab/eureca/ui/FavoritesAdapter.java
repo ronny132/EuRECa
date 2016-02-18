@@ -3,7 +3,9 @@ package com.eurecalab.eureca.ui;
 import android.app.Activity;
 import android.content.Context;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +28,7 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.View
     private Activity context;
     private LayoutInflater inflater;
     private GlobalState globalState;
+    private Snackbar snackbar;
 
     public FavoritesAdapter(List<Recording> items, Activity context) {
         this.items = items;
@@ -41,8 +44,9 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.View
         protected FloatingActionButton share;
         protected ImageView more;
         protected Context context;
+        protected Snackbar snackbar;
 
-        public ViewHolder(View itemView) {
+        public ViewHolder(View itemView, Context context) {
             super(itemView);
             rootView = itemView;
             name = (TextView) itemView.findViewById(R.id.soundName);
@@ -51,6 +55,7 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.View
             share = (FloatingActionButton) itemView
                     .findViewById(R.id.soundShare);
             more = (ImageView) itemView.findViewById(R.id.more);
+            this.context = context;
         }
 
         @Override
@@ -59,6 +64,9 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.View
 
             Recording recording = (Recording) observable;
             if (recording.isPlaying()) {
+                if(snackbar != null && snackbar.isShownOrQueued()){
+                    snackbar.dismiss();
+                }
                 preview.setImageResource(R.drawable.stop);
                 ColorCommon.changeColor(activity, preview, true);
 
@@ -74,12 +82,12 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.View
         View v = inflater.inflate(R.layout.recording_layout,
                 viewGroup, false);
 
-        ViewHolder holder = new ViewHolder(v);
+        ViewHolder holder = new ViewHolder(v, context);
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
         final Recording recording = items.get(position);
         if (recording == null) return;
         recording.deleteObservers();
@@ -103,6 +111,9 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.View
                     try {
                         globalState.stopPlayingSound();
                         recording.setContext(context);
+                        snackbar = Snackbar.make(holder.preview, R.string.downloading, Snackbar.LENGTH_INDEFINITE);
+                        holder.snackbar = snackbar;
+                        snackbar.show();
                         globalState.setPlayingRecording(recording);
                     } catch (IllegalArgumentException | SecurityException
                             | IllegalStateException | IOException e) {
@@ -119,7 +130,7 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.View
 
             @Override
             public void onClick(View v) {
-                ActionCommon.share(recording, context, globalState.getAuthenticatedUser());
+                ActionCommon.share(recording, context, globalState.getAuthenticatedUser(), holder.share);
             }
         });
 
@@ -130,6 +141,6 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.View
 
     @Override
     public int getItemCount() {
-        return 0;
+        return items.size();
     }
 }

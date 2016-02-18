@@ -53,4 +53,15 @@
 	<string name="cancel">Annulla</string>
 	<string name="empty_name">Il nome è obbligatorio</string>
 	<string name="charts_tab">CLASSIFICHE</string>
+	<string name="most_shared">I Più Condivisi</string>
+	<string name="loading">Caricamento in corso…</string>
+	<string name="admin_tab">ADMIN</string>
+	<string name="item_already_purchased">Oggetto già acquistato</string>
+	<string name="unable_to_login">Impossibile fare il login</string>
+	<string name="now_premium_user">Congratulazioni! Ora sei un utente premium!</string>
+	<string name="purchase_failed">Acquisto non riuscito</string>
+	<string name="upgrade">Acquista Premium</string>
+	<string name="free_version">Base</string>
+	<string name="network_not_available">Rete non disponibile</string>
+	<string name="connecting_using_stored_credentials">Connessione con le credenziali memorizzate</string>
 </resources>

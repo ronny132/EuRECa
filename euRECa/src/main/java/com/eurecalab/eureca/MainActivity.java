@@ -6,15 +6,20 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.TreeSet;
 
 import com.android.vending.billing.IInAppBillingService;
+import com.eurecalab.eureca.constants.FragmentConstants;
 import com.eurecalab.eureca.constants.GenericConstants;
 import com.eurecalab.eureca.constants.PermissionConstants;
 import com.eurecalab.eureca.core.Category;
 import com.eurecalab.eureca.core.GlobalState;
 import com.eurecalab.eureca.core.Recording;
 import com.eurecalab.eureca.core.User;
+import com.eurecalab.eureca.fragments.SettingsFragment;
+import com.eurecalab.eureca.fragments.UploadFragment;
+import com.eurecalab.eureca.net.DynamoDBTask;
+import com.eurecalab.eureca.net.SignInTask;
+import com.eurecalab.eureca.net.UpgradeTask;
 import com.eurecalab.eureca.ui.SlidingTabLayout;
 import com.eurecalab.eureca.ui.ThemeSwitcher;
 import com.eurecalab.eureca.ui.ViewPagerAdapter;
@@ -29,12 +34,17 @@ import android.content.pm.PackageManager;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 @SuppressLint("NewApi")
 public class MainActivity extends AppCompatActivity {
@@ -110,6 +120,10 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         } else {
 
+            if(authenticatedUser.getAdmin() == GenericConstants.FALSE_INT){
+                tabLength -= 1;
+            }
+
             if (!authenticatedUser.isProUser()) {
                 tabLength -= 1;
             }
@@ -120,12 +134,12 @@ public class MainActivity extends AppCompatActivity {
             }
             tabsArray.recycle();
 
-            viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), tabLabels, tabLength);
+            viewPagerAdapter = new ViewPagerAdapter(this, getSupportFragmentManager(), tabLabels, tabLength);
             viewPager = (ViewPager) findViewById(R.id.pager);
             viewPager.setAdapter(viewPagerAdapter);
 
             tabs = (SlidingTabLayout) findViewById(R.id.tabs);
-            tabs.setDistributeEvenly(true);
+//            tabs.setDistributeEvenly(true);
             tabs.useTextColorAccent(false);
 
             tabs.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
@@ -213,4 +227,39 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == GenericConstants.PURCHASE_REQUEST_CODE){
+            String purchaseData = data.getStringExtra("INAPP_PURCHASE_DATA");
+
+            if (resultCode == RESULT_OK) {
+                try {
+                    JSONObject jo = new JSONObject(purchaseData);
+                    String sku = jo.getString("productId");
+                    if(sku.equals(GenericConstants.PREMIUM_VERSION_SKU)){
+                        Snackbar.make(viewPager, R.string.now_premium_user, Snackbar.LENGTH_LONG).show();
+                        gs.getAuthenticatedUser().setProVersionExpireDate(GenericConstants.DATE_INFINITE);
+                        UpgradeTask task = new UpgradeTask(this);
+                        task.execute();
+                        Fragment currentFragment = gs.getFragmentAt(FragmentConstants.SETTINGS_FRAGMENT);
+                        if(currentFragment != null  && currentFragment instanceof SettingsFragment && currentFragment.isVisible()){
+                            SettingsFragment settingsFragment = (SettingsFragment) currentFragment;
+                            settingsFragment.updateUI();
+                        }
+                    }
+                }
+                catch (JSONException e) {
+                    Snackbar.make(viewPager, R.string.purchase_failed, Snackbar.LENGTH_LONG).show();
+                    e.printStackTrace();
+                }
+            }
+        }
+        else if (requestCode == GenericConstants.FILE_CHOOSER_ACTIVITY){
+            Fragment currentFragment = gs.getFragmentAt(FragmentConstants.UPLOAD_FRAGMENT);
+            if(currentFragment != null  && currentFragment instanceof UploadFragment && currentFragment.isVisible()){
+                UploadFragment fragment = (UploadFragment) currentFragment;
+                fragment.onActivityResult(requestCode, resultCode, data);
+            }
+        }
+    }
 }

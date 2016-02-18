@@ -36,4 +36,18 @@ public interface GenericConstants {
     String POLITICS_CATEGORY = "Politici";
     String DIALETTI_CATEGORY = "Dialetti";
     String FAVORITES_CATEGORY = "Preferiti";
+
+    String CATEGORY_INDEX = "Category Index";
+    String RECORDING_INDEX = "Recording Index";
+
+    int FALSE_INT = 0;
+    int TRUE_INT = 1;
+
+    String PREMIUM_VERSION_SKU = "versione_premium";
+
+    int BILLING_VERSION = 3;
+    int BILLING_RESPONSE_RESULT_OK = 0;
+    int PURCHASE_REQUEST_CODE = 1001;
+    int FILE_CHOOSER_ACTIVITY = 1002;
+
 }

@@ -372,8 +372,16 @@
         "source": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\8.4.0\\res\\drawable-xhdpi\\common_plus_signin_btn_icon_dark_focused.9.png"
     },
     {
+        "merged": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\loading.gif",
+        "source": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\src\\main\\res\\drawable-xhdpi\\loading.gif"
+    },
+    {
         "merged": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\movie_logo.png",
         "source": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\src\\main\\res\\drawable-xhdpi\\movie_logo.png"
+    },
+    {
+        "merged": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\category_default.png",
+        "source": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\src\\main\\res\\drawable-xhdpi\\category_default.png"
     },
     {
         "merged": "C:\\Android\\Android Studio Projects\\EuRECa\\euRECa\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\common_plus_signin_btn_icon_light_pressed.9.png",

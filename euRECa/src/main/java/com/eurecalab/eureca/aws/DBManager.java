@@ -67,7 +67,7 @@ public class DBManager {
         mapper.save(share);
     }
 
-    public List<Recording> getFavorites(String username, Date lowerBound, int limit) {
+    public List<ShareClassification> getFavorites(String username, Date lowerBound, int limit) {
         String filterExpression = "";
         Map<String, AttributeValue> eav = new HashMap<String, AttributeValue>();
         if (username != null) { //recuperiamo i preferiti di quell'utente
@@ -113,17 +113,14 @@ public class DBManager {
         }
 
         Collections.sort(shareClassifications);
-        shareClassifications = shareClassifications.subList(0, limit);
-
-        List<Recording> result = new LinkedList<>();
-        for (ShareClassification sc : shareClassifications) {
-            result.add(sc.getRecording());
+        if (shareClassifications.size() > limit) {
+            shareClassifications = shareClassifications.subList(0, limit);
         }
 
-        return result;
+        return shareClassifications;
     }
 
-    public void downloadCategories(Collection<Category> categories, List<Category> categoriesFiltered, User user) {
+    public void downloadCategories(Collection<Category> categories, List<Category> categoriesFiltered, String userEmail) {
         DynamoDBScanExpression scanExpression = new DynamoDBScanExpression();
         PaginatedScanList<Category> result = mapper.scan(Category.class, scanExpression);
         categories.clear();
@@ -136,8 +133,12 @@ public class DBManager {
             }
 
             if (category.getName().equals(GenericConstants.FAVORITES_CATEGORY)) {
-                List<Recording> favorites = getFavorites(user.getEmail(), null, GenericConstants.DEFAULT_USER_SEARCH_LIMIT);
-                category.setRecordings(favorites);
+                List<ShareClassification> favorites = getFavorites(userEmail, null, GenericConstants.DEFAULT_USER_SEARCH_LIMIT);
+                List<Recording> favoriteRecordings = new LinkedList<>();
+                for (ShareClassification sc : favorites) {
+                    favoriteRecordings.add(sc.getRecording());
+                }
+                category.setRecordings(favoriteRecordings);
             }
 
             categories.add(category);
@@ -203,7 +204,27 @@ public class DBManager {
     public void deleteRecording(Recording recording, Category category) {
         mapper.delete(recording);
         category.removeRecording(recording);
+        deleteShares(recording);
         mapper.save(category);
+    }
+
+    private void deleteShares(Recording recording) {
+        String filterExpression = "";
+        Map<String, AttributeValue> eav = new HashMap<String, AttributeValue>();
+        eav.put(":recording", new AttributeValue().withS(recording.getName()));
+        filterExpression += " RecordingName = :recording";
+        DynamoDBScanExpression scanExpression = new DynamoDBScanExpression();
+
+        if (!eav.isEmpty()) {
+            scanExpression = scanExpression.withFilterExpression(filterExpression)
+                    .withExpressionAttributeValues(eav);
+        }
+
+        PaginatedScanList<Share> res = mapper.scan(Share.class, scanExpression);
+
+        for (Share sh : res) {
+            mapper.delete(sh);
+        }
     }
 
     public Recording findRecording(Recording recording) {

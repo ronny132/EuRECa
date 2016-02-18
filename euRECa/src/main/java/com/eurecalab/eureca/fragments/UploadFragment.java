@@ -50,8 +50,8 @@ public class UploadFragment extends Fragment implements View.OnClickListener, Ca
     private GlobalState gs;
     private Category oldCategory;
     private Recording oldRecording;
-
-    private final static int FILE_CHOOSER_ACTIVITY = 0;
+    private int categoryIndex;
+    private int recordingIndex;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -121,12 +121,12 @@ public class UploadFragment extends Fragment implements View.OnClickListener, Ca
             String extensions = "mp3 aif aifc aiff au funk gsd gsm it jam kar la lam lma m2a mid midi mjf mod mp2 mpa mpg mpga my pfunk qcp ra "
                     + "ram rm rmi rmm rmp rpm s3m sid snd tsi voc vox wav xm aac ogg oga spx flac axa";
             intent.putExtra(FileChooser.FILE_EXTENSIONS, extensions);
-            startActivityForResult(intent, FILE_CHOOSER_ACTIVITY);
+            getActivity().startActivityForResult(intent, GenericConstants.FILE_CHOOSER_ACTIVITY);
         }
     }
 
     private void upload() {
-        Recording recording = new Recording();
+        final Recording recording = new Recording();
         String name = soundName.getText().toString();
         String filename = file.getName();
 
@@ -141,9 +141,11 @@ public class UploadFragment extends Fragment implements View.OnClickListener, Ca
         recording.setOwner(gs.getAuthenticatedUser().getEmail());
         recording.setContext(getActivity());
         Category category = (Category) soundCategory.getSelectedItem();
+        categoryIndex = soundCategory.getSelectedItemPosition();
+        recordingIndex = category.size();
         category.addRecording(recording);
         recording.setCategory(category);
-        if (oldCategory != null && !oldCategory.equals(category)) {
+        if (oldCategory != null) {
             oldCategory.removeRecording(recording);
 
             Collection<Category> categories = gs.getCategories();
@@ -172,6 +174,7 @@ public class UploadFragment extends Fragment implements View.OnClickListener, Ca
                 } else if (activity instanceof MainActivity) {
                     MainActivity mainActivity = (MainActivity) activity;
                     mainActivity.viewPager.setCurrentItem(ViewPagerConstants.HOME, true);
+
                 }
             }
         }, DynamoDBAction.CATEGORY_AND_RECORDING);
@@ -190,7 +193,12 @@ public class UploadFragment extends Fragment implements View.OnClickListener, Ca
         if (name.trim().length() == 0) {
             Snackbar.make(pathTV, getString(R.string.empty_name), Snackbar.LENGTH_LONG).show();
         } else {
-            checkNameAlreadyExisting();
+            if(oldRecording == null) {
+                checkNameAlreadyExisting();
+            }
+            else{
+                upload();
+            }
         }
     }
 
@@ -226,7 +234,8 @@ public class UploadFragment extends Fragment implements View.OnClickListener, Ca
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == FILE_CHOOSER_ACTIVITY) {
+        if (requestCode == GenericConstants.FILE_CHOOSER_ACTIVITY) {
+
             if (resultCode == Activity.RESULT_OK) {
                 file = new File(data.getStringExtra("file_path"));
                 pathTV.setText(file.getName());

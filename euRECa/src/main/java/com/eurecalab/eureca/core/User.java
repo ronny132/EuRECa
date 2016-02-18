@@ -17,9 +17,10 @@ public class User {
     private Date expireDate;
     private String proVersionExpireDate;
     private String displayName;
+    private int admin;
 
     public User() {
-
+        admin = GenericConstants.FALSE_INT;
     }
 
     @DynamoDBHashKey(attributeName = "Email")
@@ -67,5 +68,14 @@ public class User {
     @DynamoDBAttribute(attributeName = "DisplayName")
     public String getDisplayName() {
         return displayName;
+    }
+
+    @DynamoDBAttribute(attributeName = "Admin")
+    public int getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(int admin) {
+        this.admin = admin;
     }
 }

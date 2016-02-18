@@ -8,6 +8,7 @@ import com.eurecalab.eureca.aws.DBManager;
 import com.eurecalab.eureca.core.Callable;
 import com.eurecalab.eureca.core.Category;
 import com.eurecalab.eureca.core.GlobalState;
+import com.eurecalab.eureca.core.User;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -18,7 +19,7 @@ public class CategoriesAsyncTask extends AsyncTask<Void, Void, Void> {
     private Activity context;
     private GlobalState gs;
     private boolean reload;
-    private ProgressDialog dialog;
+//    private ProgressDialog dialog;
     private Callable callable;
 
     public CategoriesAsyncTask(Context context, Callable callable) {
@@ -32,11 +33,11 @@ public class CategoriesAsyncTask extends AsyncTask<Void, Void, Void> {
     protected void onPreExecute() {
         Collection<Category> storedCategories = gs.getCategories();
         reload = storedCategories == null || storedCategories.isEmpty();
-        dialog = new ProgressDialog(context);
-        dialog.setMessage(context.getString(R.string.updating));
-        if (!context.isFinishing()) {
-            dialog.show();
-        }
+//        dialog = new ProgressDialog(context);
+//        dialog.setMessage(context.getString(R.string.updating));
+//        if (!context.isFinishing()) {
+//            dialog.show();
+//        }
     }
 
     @Override
@@ -44,7 +45,13 @@ public class CategoriesAsyncTask extends AsyncTask<Void, Void, Void> {
         if (reload) {
             DBManager manager = new DBManager(context);
             manager.connect();
-            manager.downloadCategories(gs.getCategories(), gs.getFilteredCategories(), gs.getAuthenticatedUser());
+            User user = gs.getAuthenticatedUser();
+            if(user == null){
+                //TODO: utente non loggato? E' possibile?
+            }
+            else {
+                manager.downloadCategories(gs.getCategories(), gs.getFilteredCategories(), user.getEmail());
+            }
         }
         return null;
     }
@@ -52,9 +59,9 @@ public class CategoriesAsyncTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected void onPostExecute(Void result) {
         super.onPostExecute(result);
-        if (!context.isFinishing() && dialog.isShowing()) {
-            dialog.dismiss();
-        }
+//        if (!context.isFinishing() && dialog.isShowing()) {
+//            dialog.dismiss();
+//        }
         if (callable != null) {
             callable.callback();
         }

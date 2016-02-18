@@ -1,5 +1,6 @@
 package com.eurecalab.eureca.fragments;
 
+import com.android.vending.billing.IInAppBillingService;
 import com.eurecalab.eureca.LoginActivity;
 import com.eurecalab.eureca.R;
 import com.eurecalab.eureca.constants.GenericConstants;
@@ -16,15 +17,23 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 
 import android.app.Activity;
+import android.app.PendingIntent;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentSender;
+import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.os.Bundle;
+import android.os.IBinder;
+import android.os.RemoteException;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.SwitchCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,168 +46,220 @@ import java.text.ParseException;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
-public class SettingsFragment extends Fragment implements View.OnClickListener, OnConnectionFailedListener{
-	private SwitchCompat reverseColor;
-	private Button apply;
-	private Spinner colorSpinner;
-	private SpinnerAdapter colorSpinnerAdapter;
-	private Button signOutButton;
-	private TextView loggedUser;
-	private GlobalState gs;
-	private User user;
-	private FragmentActivity parent;
-	private GoogleApiClient mGoogleApiClient;
-	private TextView appLicense;
-	private TextView expiresIn;
-	private Button upgrade;
+public class SettingsFragment extends Fragment implements View.OnClickListener, OnConnectionFailedListener {
+    private SwitchCompat reverseColor;
+    private Button apply;
+    private Spinner colorSpinner;
+    private SpinnerAdapter colorSpinnerAdapter;
+    private Button signOutButton;
+    private TextView loggedUser;
+    private GlobalState gs;
+    private User user;
+    private FragmentActivity parent;
+    private GoogleApiClient mGoogleApiClient;
+    private TextView appLicense;
+    private TextView expiresIn;
+    private Button upgrade;
 
-	private SharedPreferences sharedPreferences;
-	
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-		View rootView = inflater.inflate(R.layout.fragment_settings, container,
-				false);
-		
-		reverseColor = (SwitchCompat) rootView.findViewById(R.id.reverseColor);
-		apply = (Button) rootView.findViewById(R.id.apply);
-		colorSpinner = (Spinner) rootView.findViewById(R.id.colorSpinner);
-		signOutButton = (Button) rootView.findViewById(R.id.sign_out_button);
-		loggedUser = (TextView) rootView.findViewById(R.id.logged_user);
-		appLicense = (TextView) rootView.findViewById(R.id.app_license);
-		upgrade = (Button) rootView.findViewById(R.id.upgrade);
-		expiresIn = (TextView) rootView.findViewById(R.id.expires_in);
+    private IInAppBillingService mService;
 
-		parent = getActivity();
+    private SharedPreferences sharedPreferences;
 
-		gs = (GlobalState) parent.getApplication();
-		user = gs.getAuthenticatedUser();
-		loggedUser.setText(user.getDisplayName());
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.fragment_settings, container,
+                false);
 
-		GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-				.requestEmail()
-				.build();
+        reverseColor = (SwitchCompat) rootView.findViewById(R.id.reverseColor);
+        apply = (Button) rootView.findViewById(R.id.apply);
+        colorSpinner = (Spinner) rootView.findViewById(R.id.colorSpinner);
+        signOutButton = (Button) rootView.findViewById(R.id.sign_out_button);
+        loggedUser = (TextView) rootView.findViewById(R.id.logged_user);
+        appLicense = (TextView) rootView.findViewById(R.id.app_license);
+        upgrade = (Button) rootView.findViewById(R.id.upgrade);
+        expiresIn = (TextView) rootView.findViewById(R.id.expires_in);
 
-		mGoogleApiClient = new GoogleApiClient.Builder(parent)
-				.enableAutoManage(parent, this /* OnConnectionFailedListener */)
-				.addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-				.build();
+        parent = getActivity();
 
-		signOutButton.setOnClickListener(this);
-		upgrade.setOnClickListener(this);
+        gs = (GlobalState) parent.getApplication();
+        user = gs.getAuthenticatedUser();
+        loggedUser.setText(user.getDisplayName());
 
-		StringBuilder license = new StringBuilder(getString(R.string.app_license));
-		license.append(" ");
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
 
-		boolean isPro = user.isProUser();
-		if(!isPro){
-			license.append(getString(R.string.free_version));
-			upgrade.setVisibility(View.VISIBLE);
-			expiresIn.setVisibility(View.GONE);
-		}
-		else {
-			license.append(getString(R.string.pro_version));
-			String expireDate = user.getProVersionExpireDate();
-			if (!expireDate.equals(GenericConstants.DATE_INFINITE)) {
-				try {
-					Date expirationDate = GenericConstants.DATE_FORMATTER.parse(expireDate);
-					Date now = new Date();
-					long diff = expirationDate.getTime() - now.getTime();//as given
+        mGoogleApiClient = new GoogleApiClient.Builder(parent)
+                .enableAutoManage(parent, this /* OnConnectionFailedListener */)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .build();
 
-					long days = TimeUnit.MILLISECONDS.toDays(diff);
+        signOutButton.setOnClickListener(this);
+        upgrade.setOnClickListener(this);
 
-					StringBuilder expiresInSB = new StringBuilder();
-					expiresInSB.append(getString(R.string.expires_in)).append(" ");
-					expiresInSB.append(days).append(" ");
+        updateUI();
 
-					if (days == 1) {
-						expiresInSB.append(getString(R.string.day));
-					} else {
-						expiresInSB.append(getString(R.string.days));
-					}
-					expiresIn.setText(expiresInSB.toString());
-					upgrade.setText(getString(R.string.extend));
-				} catch (ParseException e) {
-					e.printStackTrace();
-				}
-			}
-			else{
-				expiresIn.setVisibility(View.GONE);
-				upgrade.setVisibility(View.GONE);
-			}
-		}
+        TypedArray colorArray = getResources().obtainTypedArray(R.array.theme_colors);
+        int[] colors = new int[colorArray.length()];
 
-		appLicense.setText(license.toString());
+        int defaultColor = ContextCompat.getColor(getActivity(), R.color.color_primary_red);
 
-		TypedArray colorArray = getResources().obtainTypedArray(R.array.theme_colors);
-		int [] colors = new int[colorArray.length()];
-		
-		int defaultColor = ContextCompat.getColor(getActivity(), R.color.color_primary_red);
-		
-		for (int i = 0; i < colors.length; i++) {
-			colors[i] = colorArray.getColor(i, defaultColor);
-		}
-		
-		colorArray.recycle();
-		
-		colorSpinnerAdapter = new ColorSpinnerAdapter(getActivity(), colors);
-		
-		colorSpinner.setAdapter(colorSpinnerAdapter);
-		
-		apply.setOnClickListener(this);
-		
-		sharedPreferences = getActivity().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-		int color = sharedPreferences.getInt(getString(R.string.saved_color), R.color.color_primary_red);
-		boolean reverse = sharedPreferences.getBoolean(getString(R.string.saved_reverse), false);
-		
-		int position = -1;
-		for (int i = 0; i < colors.length; i++) {
-			if(colors[i] == color){
-				position = i;
-				break;
-			}
-		}
-		
-		colorSpinner.setSelection(position);
-		
-		reverseColor.setChecked(reverse);
-		
-		return rootView;
-	}
+        for (int i = 0; i < colors.length; i++) {
+            colors[i] = colorArray.getColor(i, defaultColor);
+        }
 
-	@Override
-	public void onClick(View v) {
-		if(v.equals(apply)){
-			boolean reverse = reverseColor.isChecked();
-			
-			int color = (Integer) colorSpinner.getSelectedItem();
-			
-			new ThemeSwitcher(getActivity()).changeToTheme(color, reverse);
-			
-			SharedPreferences.Editor editor = sharedPreferences.edit();
-			editor.putInt(getString(R.string.saved_color), color);
-			editor.putBoolean(getString(R.string.saved_reverse), reverse);
-			editor.commit();
-		}
-		else if(v.equals(signOutButton)){
-			Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
-					new ResultCallback<Status>() {
-						@Override
-						public void onResult(Status status) {
-							Intent intent = new Intent(getActivity(), LoginActivity.class);
-							getActivity().startActivity(intent);
-							getActivity().finish();
-						}
-					});
-			gs.setAuthenticatedUser(null);
-		}
-		else if(v.equals(upgrade)){
-			//TODO: gestire upgrade a pro
-		}
-	}
+        colorArray.recycle();
 
-	@Override
-	public void onConnectionFailed(ConnectionResult connectionResult) {
+        colorSpinnerAdapter = new ColorSpinnerAdapter(getActivity(), colors);
 
-	}
+        colorSpinner.setAdapter(colorSpinnerAdapter);
+
+        apply.setOnClickListener(this);
+
+        sharedPreferences = getActivity().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        int color = sharedPreferences.getInt(getString(R.string.saved_color), R.color.color_primary_red);
+        boolean reverse = sharedPreferences.getBoolean(getString(R.string.saved_reverse), false);
+
+        int position = -1;
+        for (int i = 0; i < colors.length; i++) {
+            if (colors[i] == color) {
+                position = i;
+                break;
+            }
+        }
+
+        colorSpinner.setSelection(position);
+
+        reverseColor.setChecked(reverse);
+
+        ServiceConnection mServiceConn = new ServiceConnection() {
+            @Override
+            public void onServiceDisconnected(ComponentName name) {
+                mService = null;
+            }
+
+            @Override
+            public void onServiceConnected(ComponentName name,
+                                           IBinder service) {
+                mService = IInAppBillingService.Stub.asInterface(service);
+            }
+        };
+
+        Intent serviceIntent =
+                new Intent("com.android.vending.billing.InAppBillingService.BIND");
+        serviceIntent.setPackage("com.android.vending");
+        getActivity().bindService(serviceIntent, mServiceConn, Context.BIND_AUTO_CREATE);
+
+        return rootView;
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v.equals(apply)) {
+            boolean reverse = reverseColor.isChecked();
+
+            int color = (Integer) colorSpinner.getSelectedItem();
+
+            new ThemeSwitcher(getActivity()).changeToTheme(color, reverse);
+
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putInt(getString(R.string.saved_color), color);
+            editor.putBoolean(getString(R.string.saved_reverse), reverse);
+            editor.commit();
+        } else if (v.equals(signOutButton)) {
+            Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
+                    new ResultCallback<Status>() {
+                        @Override
+                        public void onResult(Status status) {
+                            Intent intent = new Intent(getActivity(), LoginActivity.class);
+                            getActivity().startActivity(intent);
+                            getActivity().finish();
+                        }
+                    });
+            gs.setAuthenticatedUser(null);
+        } else if (v.equals(upgrade)) {
+            upgradePro();
+        }
+    }
+
+    private void upgradePro() {
+        try {
+            Bundle buyIntentBundle = mService.getBuyIntent(GenericConstants.BILLING_VERSION, getActivity().getPackageName(),
+                    GenericConstants.PREMIUM_VERSION_SKU, "inapp", "bGoa+V7g/yqDXvKRqq+JTFn4uQZbPiQJo4pf9RzJ");
+
+            PendingIntent pendingIntent = buyIntentBundle.getParcelable("BUY_INTENT");
+            if (pendingIntent != null) {
+                getActivity().startIntentSenderForResult(pendingIntent.getIntentSender(), GenericConstants.PURCHASE_REQUEST_CODE, new Intent(), 0, 0, 0);
+            } else {
+                Snackbar.make(upgrade, R.string.item_already_purchased, Snackbar.LENGTH_LONG).show();
+            }
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        } catch (IntentSender.SendIntentException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mGoogleApiClient.stopAutoManage(getActivity());
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (upgrade != null) {
+            updateUI();
+        }
+    }
+
+    public void updateUI() {
+        StringBuilder license = new StringBuilder(getString(R.string.app_license));
+        license.append(" ");
+
+        boolean isPro = user.isProUser();
+        if (!isPro) {
+            license.append(getString(R.string.free_version));
+            upgrade.setVisibility(View.VISIBLE);
+            expiresIn.setVisibility(View.GONE);
+        } else {
+            license.append(getString(R.string.pro_version));
+            String expireDate = user.getProVersionExpireDate();
+            if (!expireDate.equals(GenericConstants.DATE_INFINITE)) {
+                try {
+                    Date expirationDate = GenericConstants.DATE_FORMATTER.parse(expireDate);
+                    Date now = new Date();
+                    long diff = expirationDate.getTime() - now.getTime();//as given
+
+                    long days = TimeUnit.MILLISECONDS.toDays(diff);
+
+                    StringBuilder expiresInSB = new StringBuilder();
+                    expiresInSB.append(getString(R.string.expires_in)).append(" ");
+                    expiresInSB.append(days).append(" ");
+
+                    if (days == 1) {
+                        expiresInSB.append(getString(R.string.day));
+                    } else {
+                        expiresInSB.append(getString(R.string.days));
+                    }
+                    expiresIn.setText(expiresInSB.toString());
+                    upgrade.setText(getString(R.string.extend));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                expiresIn.setVisibility(View.GONE);
+                upgrade.setVisibility(View.GONE);
+            }
+        }
+
+        appLicense.setText(license.toString());
+    }
 }

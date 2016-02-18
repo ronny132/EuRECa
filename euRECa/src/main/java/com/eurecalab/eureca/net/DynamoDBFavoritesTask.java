@@ -9,6 +9,7 @@ import com.eurecalab.eureca.constants.DynamoDBAction;
 import com.eurecalab.eureca.core.Callable;
 import com.eurecalab.eureca.core.GlobalState;
 import com.eurecalab.eureca.core.Recording;
+import com.eurecalab.eureca.core.ShareClassification;
 import com.eurecalab.eureca.core.User;
 
 import java.util.Date;
@@ -20,7 +21,7 @@ public class DynamoDBFavoritesTask extends AsyncTask<Void, Void, Void> {
     private User user;
     private int action;
     private Callable callable;
-    private List<Recording> searchResult;
+    private List<ShareClassification> searchResult;
     private Date lowerBound;
     private int limit;
 

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.arandroid.sharesoundz"
-    android:versionCode="1"
-    android:versionName="1.0" >
+    android:versionCode="104"
+    android:versionName="1.0.4" >
 
     <uses-sdk
         android:minSdkVersion="9"
@@ -40,16 +40,6 @@
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name="com.eurecalab.eureca.AdminActivity"
-            android:configChanges="orientation|screenSize"
-            android:label="@string/admin_name" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity

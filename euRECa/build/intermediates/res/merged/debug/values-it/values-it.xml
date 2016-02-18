@@ -24,6 +24,7 @@
     <string name="action_search">Cerca</string>
     <string name="action_settings">Impostazioni</string>
     <string name="admin_name">EuRECa Admin</string>
+    <string name="admin_tab">ADMIN</string>
     <string name="app_license">Licenza: </string>
     <string name="app_name">EuRECa</string>
     <string name="app_restart">(L\'app si riavvierà)</string>
@@ -65,6 +66,7 @@
     <string msgid="311697239335516384" name="common_open_on_phone">"Apri sul telefono"</string>
     <string msgid="3156914698180786012" name="common_signin_button_text">"Accedi"</string>
     <string msgid="1483290677806110088" name="common_signin_button_text_long">"Accedi con Google"</string>
+    <string name="connecting_using_stored_credentials">Connessione con le credenziali memorizzate</string>
     <string name="current_folder">Cartella Corrente</string>
     <string name="day">giorno)</string>
     <string name="days">giorni)</string>
@@ -75,11 +77,18 @@
     <string name="expires_in">(scade fra</string>
     <string name="extend">Estendi</string>
     <string name="file">File: </string>
+    <string name="free_version">Base</string>
     <string name="functionality_available_in_pro">Questa funzionalità è disponibile solo con la licenza Premium</string>
     <string name="hello_world">Hello world!</string>
     <string name="home_tab">HOME</string>
+    <string name="item_already_purchased">Oggetto già acquistato</string>
+    <string name="loading">Caricamento in corso…</string>
+    <string name="most_shared">I Più Condivisi</string>
     <string name="name">Nome: </string>
+    <string name="network_not_available">Rete non disponibile</string>
+    <string name="now_premium_user">Congratulazioni! Ora sei un utente premium!</string>
     <string name="parent_directory">…Cartella Superiore</string>
+    <string name="purchase_failed">Acquisto non riuscito</string>
     <string name="reverseColor">Inverti Colori</string>
     <string name="save">Salva</string>
     <string name="saved_color">Saved Color</string>
@@ -96,7 +105,9 @@
     <string name="tags_hint">separati da spazio</string>
     <string name="theme">Tema</string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="unable_to_login">Impossibile fare il login</string>
     <string name="updating">Aggiornamento…</string>
+    <string name="upgrade">Acquista Premium</string>
     <string name="upload_ok">Upload avvenuto con successo</string>
     <string name="upload_tab">UPLOAD</string>
     <string name="uploading">In Upload…</string>

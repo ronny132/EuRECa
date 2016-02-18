@@ -26,6 +26,7 @@ public class SearchCommon {
             String [] queryTokens = query.split(" ");
 
             gs.getFilteredCategories().clear();
+//            int index = 0;
             for (Category category : gs.getCategories()) {
                 Category categoryClone = new Category();
                 categoryClone.setColorHex(category.getColorHex());
@@ -50,11 +51,16 @@ public class SearchCommon {
                             }
                         }
                     }
-                    if (categoryClone.size() > 0) {
-                        gs.getFilteredCategories().add(categoryClone);
-                    }
                 }
-                adapter.notifyDataSetChanged();
+                if (categoryClone.size() > 0) {
+                    gs.getFilteredCategories().add(categoryClone);
+//                    adapter.notifyItemChanged(index);
+                }
+//                else{
+//                    adapter.notifyItemRemoved(index);
+//                }
+//                index++;
+//                adapter.notifyDataSetChanged();
             }
         }
     }
@@ -86,6 +92,6 @@ public class SearchCommon {
     public static void resetRecordings(GlobalState gs, CategoryAdapter adapter) {
         gs.getFilteredCategories().clear();
         gs.getFilteredCategories().addAll(gs.getCategories());
-        adapter.notifyDataSetChanged();
+//        adapter.notifyDataSetChanged();
     }
 }

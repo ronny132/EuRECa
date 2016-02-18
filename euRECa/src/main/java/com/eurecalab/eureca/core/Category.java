@@ -18,8 +18,7 @@ public class Category implements Comparable<Category>, Serializable, ParentListI
 	private List<Recording> recordings;
 	private String colorHex;
 	private int sortIndex;
-	private List<Object> children;
-	
+
 	public Category() {
 		recordings = new LinkedList<Recording>();
 	}
@@ -35,8 +34,6 @@ public class Category implements Comparable<Category>, Serializable, ParentListI
 	
 	public void setRecordings(List<Recording> recordings) {
 		this.recordings = recordings;
-        children = new LinkedList<>();
-        children.addAll(recordings);
     }
 	
 	@DynamoDBHashKey (attributeName = "Name")
@@ -51,12 +48,10 @@ public class Category implements Comparable<Category>, Serializable, ParentListI
 	
 	public void addRecording(Recording recording){
 		recordings.add(recording);
-        children.add(recording);
 	}
 	
 	public boolean removeRecording(Recording recording){
 		boolean ok = recordings.remove(recording);
-        ok = ok & children.remove(recording);
         return ok;
 	}
 

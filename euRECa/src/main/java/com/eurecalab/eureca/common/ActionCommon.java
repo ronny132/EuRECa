@@ -5,6 +5,7 @@ import java.util.Date;
 
 import com.eurecalab.eureca.R;
 import com.eurecalab.eureca.constants.DynamoDBAction;
+import com.eurecalab.eureca.constants.GenericConstants;
 import com.eurecalab.eureca.constants.S3Action;
 import com.eurecalab.eureca.core.Callable;
 import com.eurecalab.eureca.core.Recording;
@@ -17,21 +18,30 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.design.widget.Snackbar;
 import android.util.Log;
+import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
 public class ActionCommon {
 
-	public static void share(final Recording recording, final Context context, final User user) {
+	public static void share(final Recording recording, final Context context, final User user, View view) {
 		File path = new File(recording.getPath());
 		if (!path.exists()) {
-			new S3Task(context, recording, null, new Callable() {
+			if(view!=null) {
+                final Snackbar snackbar = Snackbar.make(view, R.string.downloading, Snackbar.LENGTH_INDEFINITE);
+                snackbar.show();
+                new S3Task(context, recording, null, new Callable() {
 
-				@Override
-				public void callback(Object ... args) {
-					shareAudio(recording, context, user);
-				}
-			}, S3Action.DOWNLOAD).execute();
+                    @Override
+                    public void callback(Object... args) {
+                        if(snackbar.isShownOrQueued()){
+                            snackbar.dismiss();
+                        }
+                        shareAudio(recording, context, user);
+                    }
+                }, S3Action.DOWNLOAD).execute();
+            }
 		}
 		else{
 			shareAudio(recording, context, user);

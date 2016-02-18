@@ -203,4 +203,9 @@ public class Recording extends Observable implements Callable, Serializable{
     public void setShowMore(boolean showMore) {
         this.showMore = showMore;
     }
+
+	@DynamoDBIgnore
+	public Context getContext() {
+		return context;
+	}
 }

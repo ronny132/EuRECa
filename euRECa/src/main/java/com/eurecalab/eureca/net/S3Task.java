@@ -21,7 +21,7 @@ import java.util.List;
 public class S3Task extends AsyncTask<Void, Void, Void> implements TransferListener {
     private Activity context;
     private Recording recording;
-    private ProgressDialog dialog;
+//    private ProgressDialog dialog;
     private S3Manager manager;
     private Callable callable;
     private int action;
@@ -56,7 +56,7 @@ public class S3Task extends AsyncTask<Void, Void, Void> implements TransferListe
     protected void onPreExecute() {
         super.onPreExecute();
         if (action != S3Action.DELETE) {
-            dialog = new ProgressDialog(context);
+//            dialog = new ProgressDialog(context);
             String message = "";
             switch (action) {
                 case S3Action.DOWNLOAD:
@@ -69,10 +69,10 @@ public class S3Task extends AsyncTask<Void, Void, Void> implements TransferListe
                     message = "Updating...";
                     break;
             }
-            dialog.setMessage(message);
-            if (!context.isFinishing()) {
-                dialog.show();
-            }
+//            dialog.setMessage(message);
+//            if (!context.isFinishing()) {
+//                dialog.show();
+//            }
         }
         manager.connect();
     }
@@ -103,9 +103,9 @@ public class S3Task extends AsyncTask<Void, Void, Void> implements TransferListe
             if (callable != null) {
                 callable.callback(list);
             }
-            if (dialog != null && dialog.isShowing() && !context.isFinishing()) {
-                dialog.dismiss();
-            }
+//            if (dialog != null && dialog.isShowing() && !context.isFinishing()) {
+//                dialog.dismiss();
+//            }
         }
     }
 
@@ -115,9 +115,9 @@ public class S3Task extends AsyncTask<Void, Void, Void> implements TransferListe
 
     @Override
     public void onError(int id, Exception ex) {
-        if (dialog != null && dialog.isShowing() && !context.isFinishing()) {
-            dialog.dismiss();
-        }
+//        if (dialog != null && dialog.isShowing() && !context.isFinishing()) {
+//            dialog.dismiss();
+//        }
         Toast.makeText(context, context.getString(R.string.download_error), Toast.LENGTH_LONG).show();
 
     }
@@ -125,15 +125,15 @@ public class S3Task extends AsyncTask<Void, Void, Void> implements TransferListe
     @Override
     public void onProgressChanged(int id, long bytesCurrent, long bytesTotal) {
         int percentage = (int) (bytesCurrent / bytesTotal * 100);
-        dialog.setProgress(percentage);
+//        dialog.setProgress(percentage);
     }
 
     @Override
     public void onStateChanged(int id, TransferState state) {
         if (state.equals(TransferState.COMPLETED)) {
-            if (dialog != null && dialog.isShowing() && !context.isFinishing()) {
-                dialog.dismiss();
-            }
+//            if (dialog != null && dialog.isShowing() && !context.isFinishing()) {
+//                dialog.dismiss();
+//            }
             if(callable!= null){
                 callable.callback();
             }

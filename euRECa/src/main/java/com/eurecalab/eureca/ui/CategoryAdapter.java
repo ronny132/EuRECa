@@ -7,10 +7,10 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -49,7 +49,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 public class CategoryAdapter extends
-        ExpandableRecyclerAdapter<CategoryAdapter.CategoryViewHolder, CategoryAdapter.RecordingViewHolder> implements DialogInterface.OnClickListener, Callable{
+        ExpandableRecyclerAdapter<CategoryAdapter.CategoryViewHolder, CategoryAdapter.RecordingViewHolder> implements DialogInterface.OnClickListener, Callable {
 
     private Activity context;
     protected ImageLoader imageLoader = ImageLoader.getInstance();
@@ -59,6 +59,7 @@ public class CategoryAdapter extends
     private LayoutInflater inflater;
     private int selectedCategoryPosition;
     private int selectedRecordingPosition;
+    private Snackbar snackbar;
 
     public CategoryAdapter(Activity context, List<Category> objects) {
         super(objects);
@@ -69,9 +70,9 @@ public class CategoryAdapter extends
             globalState = (GlobalState) context.getApplication();
         }
         this.options = new DisplayImageOptions.Builder()
-                .showStubImage(R.drawable.icon)
-                .showImageForEmptyUri(R.drawable.icon) // resource or drawable
-                .showImageOnFail(R.drawable.icon) // resource or drawable
+                .showStubImage(R.drawable.category_default)
+                .showImageForEmptyUri(R.drawable.category_default) // resource or drawable
+                .showImageOnFail(R.drawable.category_default) // resource or drawable
                 .resetViewBeforeLoading(false) // default
                 .cacheInMemory(true) // default
                 .cacheOnDisc(true) // default
@@ -119,7 +120,7 @@ public class CategoryAdapter extends
         protected FloatingActionButton preview;
         protected FloatingActionButton share;
         protected ImageView more;
-        protected Context context;
+        protected Snackbar snackbar;
 
         public RecordingViewHolder(View itemView) {
             super(itemView);
@@ -134,10 +135,13 @@ public class CategoryAdapter extends
 
         @Override
         public void update(Observable observable, Object data) {
-            Activity activity = (Activity) context;
-
             Recording recording = (Recording) observable;
+            Activity activity = (Activity) recording.getContext();
+
             if (recording.isPlaying()) {
+                if(snackbar != null && snackbar.isShownOrQueued()){
+                    snackbar.dismiss();
+                }
                 preview.setImageResource(R.drawable.stop);
                 ColorCommon.changeColor(activity, preview, true);
 
@@ -154,20 +158,19 @@ public class CategoryAdapter extends
         downloader.execute();
     }
 
-    public void callback(Object ... args){
-        if(args.length == 2 && args[0] instanceof File && args[1] instanceof ImageView){
+    public void callback(Object... args) {
+        if (args.length == 2 && args[0] instanceof File && args[1] instanceof ImageView) {
             File path = (File) args[0];
             ImageView imageView = (ImageView) args[1];
             loadImage(path, imageView);
-        }
-        else{
+        } else {
 //            notifyItemRemoved(mItemList.indexOf(selectedRecording));
 //            mItemList.remove(selectedRecording);
         }
     }
 
     private void loadImage(File path, ImageView imageView) {
-        imageLoader.displayImage("file://"+path.getAbsolutePath(), imageView, options);
+        imageLoader.displayImage("file://" + path.getAbsolutePath(), imageView, options);
     }
 
     @Override
@@ -195,16 +198,15 @@ public class CategoryAdapter extends
         holder.handle.setBackgroundColor(Color.parseColor(category.getColorHex()));
 
         File imagePath = FileCommon.getPath(context, category.getIconFileName());
-        if(!imagePath.exists()){
+        if (!imagePath.exists()) {
             downloadImage(category.getIconFileName(), holder.icon);
-        }
-        else{
+        } else {
             loadImage(imagePath, holder.icon);
         }
     }
 
     @Override
-    public void onBindChildViewHolder(RecordingViewHolder holder, int position, Object object) {
+    public void onBindChildViewHolder(final RecordingViewHolder holder, int position, Object object) {
         final Recording recording = (Recording) object;
         if (recording == null) return;
         recording.deleteObservers();
@@ -228,6 +230,9 @@ public class CategoryAdapter extends
                     try {
                         globalState.stopPlayingSound();
                         recording.setContext(context);
+                        snackbar = Snackbar.make(holder.preview, R.string.downloading, Snackbar.LENGTH_INDEFINITE);
+                        holder.snackbar = snackbar;
+                        snackbar.show();
                         globalState.setPlayingRecording(recording);
                     } catch (IllegalArgumentException | SecurityException
                             | IllegalStateException | IOException e) {
@@ -244,14 +249,18 @@ public class CategoryAdapter extends
 
             @Override
             public void onClick(View v) {
-                ActionCommon.share(recording, context, globalState.getAuthenticatedUser());
+                ActionCommon.share(recording, context, globalState.getAuthenticatedUser(), holder.share);
             }
         });
 
         ColorCommon.changeColor(context, holder.share, true);
 
         if (recording.getOwner().equals(globalState.getAuthenticatedUser().getEmail())) {
-            recording.setShowMore(true);
+            if (recording.getCategory() == null || recording.getCategory().getName().equals(GenericConstants.FAVORITES_CATEGORY)) {
+                recording.setShowMore(false);
+            } else {
+                recording.setShowMore(true);
+            }
         }
 
         if (recording.isShowMore()) {
@@ -260,7 +269,7 @@ public class CategoryAdapter extends
 
             boolean primary = true;
 
-            if(colorPrimary.data == ContextCompat.getColor(context, R.color.white)){
+            if (colorPrimary.data == ContextCompat.getColor(context, R.color.white)) {
                 primary = false;
             }
 
@@ -279,7 +288,7 @@ public class CategoryAdapter extends
 
             holder.more.setVisibility(View.VISIBLE);
 
-        } else{
+        } else {
             holder.more.setVisibility(View.GONE);
         }
     }
@@ -310,6 +319,7 @@ public class CategoryAdapter extends
                         Intent intent = new Intent(context, UploadActivity.class);
                         intent.putExtra(GenericConstants.SELECTED_RECORDING, selectedRecording);
                         context.startActivity(intent);
+                        notifyChildItemRemoved(selectedCategoryPosition, selectedRecordingPosition);
                         return true;
                     case R.id.menu_delete:
                         AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -323,4 +333,5 @@ public class CategoryAdapter extends
         });
         popup.show();
     }
+
 }

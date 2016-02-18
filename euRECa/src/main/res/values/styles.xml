@@ -26,4 +26,7 @@
     <style name="AppThemeRed.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppThemeRed.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="LoadingStyle">
+        <item name="android:textSize">20sp</item>
+    </style>
 </resources>

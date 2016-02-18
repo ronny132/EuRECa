@@ -41,10 +41,10 @@
     <string name="theme">Theme</string>
     <string name="account" translatable="false">Account</string>
     <string name="app_license">App License:</string>
-    <string name="upgrade" translatable="false">Upgrade</string>
+    <string name="upgrade">Upgrade</string>
     <string name="expires_in">(expires in</string>
     <string name="pro_version" translatable="false">Premium</string>
-    <string name="free_version" translatable="false">Basic</string>
+    <string name="free_version">Basic</string>
     <string name="days">days)</string>
     <string name="day">day)</string>
     <string name="functionality_available_in_pro">This feature is only available with Premium license</string>
@@ -62,4 +62,13 @@
     <string name="cancel">Cancel</string>
     <string name="empty_name">The name is required</string>
     <string name="charts_tab">CHARTS</string>
+    <string name="most_shared">The Most Shared</string>
+    <string name="loading">Loading…</string>
+    <string name="admin_tab">ADMIN</string>
+    <string name="item_already_purchased">Item already purchased</string>
+    <string name="unable_to_login">Unable to login</string>
+    <string name="now_premium_user">Congratulation! You\'re now a premium user!</string>
+    <string name="purchase_failed">Purchase failed</string>
+    <string name="network_not_available">Network not available</string>
+    <string name="connecting_using_stored_credentials">Connecting using stored credentials</string>
 </resources>

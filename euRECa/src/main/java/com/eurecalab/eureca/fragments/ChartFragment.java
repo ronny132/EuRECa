@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import com.eurecalab.eureca.constants.GenericConstants;
 import com.eurecalab.eureca.core.Callable;
 import com.eurecalab.eureca.core.GlobalState;
 import com.eurecalab.eureca.core.Recording;
+import com.eurecalab.eureca.core.ShareClassification;
 import com.eurecalab.eureca.net.DynamoDBFavoritesTask;
 import com.eurecalab.eureca.ui.FavoritesAdapter;
 
@@ -25,6 +27,7 @@ public class ChartFragment extends Fragment implements Callable {
     private GlobalState gs;
     private FavoritesAdapter adapter;
     private List<Recording> favorites;
+    private View loading;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -33,6 +36,7 @@ public class ChartFragment extends Fragment implements Callable {
 
         recordingList = (RecyclerView) rootView.findViewById(R.id.recordingList);
         recordingList.setLayoutManager(new LinearLayoutManager(getActivity()));
+        loading = rootView.findViewById(R.id.loading);
 
         gs = (GlobalState) getActivity().getApplication();
 
@@ -45,12 +49,21 @@ public class ChartFragment extends Fragment implements Callable {
 
     @Override
     public void callback(Object... args) {
-        if(args.length == 1 && args[0] instanceof List){
+        if (args.length == 1 && args[0] instanceof List) {
             favorites = new LinkedList<>();
-            List<Recording> list = (List<Recording>) args[0];
+            List<ShareClassification> shareClassifications = (List<ShareClassification>) args[0];
+            List<Recording> list = new LinkedList<>();
+            for (ShareClassification sc : shareClassifications) {
+                Recording recording = sc.getRecording();
+                recording.setContext(getActivity());
+                list.add(recording);
+            }
             favorites.addAll(list);
         }
-        adapter = new FavoritesAdapter(favorites, getActivity());
-        recordingList.setAdapter(adapter);
+        if (getActivity() != null) {
+            adapter = new FavoritesAdapter(favorites, getActivity());
+            recordingList.setAdapter(adapter);
+            loading.setVisibility(View.GONE);
+        }
     }
 }

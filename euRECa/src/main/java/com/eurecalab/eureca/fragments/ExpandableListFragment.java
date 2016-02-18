@@ -17,6 +17,8 @@ import com.eurecalab.eureca.net.CategoriesAsyncTask;
 import com.eurecalab.eureca.net.DynamoDBFavoritesTask;
 import com.eurecalab.eureca.ui.CategoryAdapter;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -39,6 +41,8 @@ public class ExpandableListFragment extends Fragment implements OnClickListener,
     private SearchView searchView;
     private FloatingActionButton recordButton;
     private RecyclerView recyclerView;
+    private View loading;
+    private Activity activity;
 
     private GlobalState gs;
 
@@ -52,22 +56,26 @@ public class ExpandableListFragment extends Fragment implements OnClickListener,
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
-        recyclerView = (RecyclerView) rootView.findViewById(R.id.categoryListView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        activity = getActivity();
 
-        gs = (GlobalState) getActivity().getApplication();
+        recyclerView = (RecyclerView) rootView.findViewById(R.id.categoryListView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(activity));
+
+        loading = rootView.findViewById(R.id.loading);
+        loading.setVisibility(View.VISIBLE);
+
+        gs = (GlobalState) activity.getApplication();
 
         if (gs.getCategories() == null || gs.getCategories().isEmpty()) {
-            CategoriesAsyncTask task = new CategoriesAsyncTask(getActivity(), this);
+            CategoriesAsyncTask task = new CategoriesAsyncTask(activity, this);
             task.execute();
-        }
-        else{
-            adapter = new CategoryAdapter(getActivity(), gs.getFilteredCategories());
+        } else {
+            adapter = new CategoryAdapter(activity, gs.getFilteredCategories());
             recyclerView.setAdapter(adapter);
         }
 
         recordButton = (FloatingActionButton) rootView.findViewById(R.id.fab);
-        ColorCommon.changeColor(getActivity(), recordButton, true);
+        ColorCommon.changeColor(activity, recordButton, true);
         recordButton.setVisibility(View.GONE);
 
         return rootView;
@@ -104,8 +112,12 @@ public class ExpandableListFragment extends Fragment implements OnClickListener,
     public boolean onQueryTextChange(String query) {
         if (query.trim().length() == 0) {
             SearchCommon.resetRecordings(gs, adapter);
+            adapter = new CategoryAdapter(activity, gs.getFilteredCategories());
+            recyclerView.setAdapter(adapter);
         } else {
             SearchCommon.searchForRecordings(query, gs, adapter);
+            adapter = new CategoryAdapter(activity, gs.getFilteredCategories());
+            recyclerView.setAdapter(adapter);
         }
         return false;
     }
@@ -119,16 +131,21 @@ public class ExpandableListFragment extends Fragment implements OnClickListener,
     @Override
     public void onResume() {
         super.onResume();
-        ActionCommon.hideKeyboard(getActivity());
-        if (adapter != null) {
-            adapter.notifyDataSetChanged();
+        ActionCommon.hideKeyboard(activity);
+        if (gs != null && gs.getFilteredCategories() != null && recyclerView != null) {
+//            adapter = new CategoryAdapter(activity, gs.getFilteredCategories());
+//            recyclerView.setAdapter(adapter);
+            if (gs.getFilteredCategories().size() > 0) {
+                loading.setVisibility(View.GONE);
+            }
         }
     }
 
     @Override
     public void callback(Object... args) {
-        adapter = new CategoryAdapter(getActivity(), gs.getFilteredCategories());
+        adapter = new CategoryAdapter(activity, gs.getFilteredCategories());
         recyclerView.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
+        loading.setVisibility(View.GONE);
     }
+
 }
